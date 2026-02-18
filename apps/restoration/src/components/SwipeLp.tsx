@@ -693,24 +693,39 @@ export default function SwipeLp() {
     <SlideCta key="cta" />,
   ];
 
-  // モバイル: 横スワイプ
+  // モバイル: 横スワイプ（cssMode=trueでネイティブscroll-snap使用）
   if (isMobile) {
     return (
       <Swiper
+        key="horizontal-swiper"
         modules={[Pagination, Keyboard]}
+        direction="horizontal"
+        cssMode={true}
         pagination={{ clickable: true, type: "bullets" }}
-        keyboard={{ enabled: true, onlyInViewport: true }}
+        keyboard={{ enabled: true }}
         slidesPerView={1}
         spaceBetween={0}
-        speed={600}
+        style={{ width: "100%", height: "100dvh", overflow: "hidden" }}
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}
         onSlideChange={handleSlideChange}
-        className="swiper swiper-horizontal"
       >
         {slides.map((slide, i) => (
-          <SwiperSlide key={i}>{slide}</SwiperSlide>
+          <SwiperSlide
+            key={i}
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              overflow: "hidden",
+              flexShrink: 0,
+            }}
+          >
+            {slide}
+          </SwiperSlide>
         ))}
       </Swiper>
     );
