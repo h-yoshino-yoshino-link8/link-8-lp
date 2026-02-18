@@ -4,7 +4,14 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Keyboard } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
-import { trackSlideView, trackCtaClick, trackTelClick } from "@/lib/tracking";
+import {
+  trackSlideView,
+  trackCtaClick,
+  trackTelClick,
+  setTrackingVariant,
+  trackVariantAssigned,
+} from "@/lib/tracking";
+import { getVariantWithOverride, type ABVariant } from "@/lib/ab-test";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -15,12 +22,13 @@ const HP_URL = "https://link-8.jp";
 
 type SlideProps = {
   onCtaClick?: () => void;
+  variant?: ABVariant | null;
 };
 
 // ============================================================
 // Slide 1: ファーストビュー
 // ============================================================
-function SlideHero({ onCtaClick }: SlideProps) {
+function SlideHero({ onCtaClick, variant }: SlideProps) {
   return (
     <div className="relative w-full h-full bg-gradient-to-br from-link-navy via-[#1e3a5f] to-link-dark flex items-center justify-center overflow-hidden">
       {/* 背景パターン */}
@@ -96,9 +104,11 @@ function SlideHero({ onCtaClick }: SlideProps) {
 
         {/* スワイプヒント（モバイルのみ） */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-hint flex flex-col items-center gap-1 md:hidden">
-          <span className="text-white/60 text-xs">横にスワイプ →</span>
+          <span className="text-white/60 text-xs">
+            {variant === "scroll" ? "スクロールして詳しく ↓" : "横にスワイプ →"}
+          </span>
           <svg
-            className="w-6 h-6 text-white/70 rotate-[-90deg]"
+            className={`w-6 h-6 text-white/70 ${variant === "scroll" ? "" : "rotate-[-90deg]"}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -655,16 +665,63 @@ function SlideCta() {
 }
 
 // ============================================================
+// モバイル縦スクロール版（A/Bテスト Variant B）
+// ============================================================
+function MobileScrollView({
+  slides,
+  onScroll,
+}: {
+  slides: React.ReactNode[];
+  onScroll: () => void;
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, [onScroll]);
+
+  return (
+    <div
+      ref={scrollRef}
+      className="w-full h-[100dvh] overflow-y-auto"
+      style={{ WebkitOverflowScrolling: "touch" }}
+    >
+      {slides.map((slide, i) => (
+        <section
+          key={i}
+          data-slide-index={i}
+          className={i === 0 ? "min-h-[100dvh]" : "min-h-[85dvh]"}
+        >
+          {slide}
+        </section>
+      ))}
+    </div>
+  );
+}
+
+// ============================================================
 // メイン SwipeLp コンポーネント
 // ============================================================
 export default function SwipeLp() {
   const swiperRef = useRef<SwiperType | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [variant, setVariant] = useState<ABVariant | null>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
     window.addEventListener("resize", check);
+
+    // A/Bバリアント割り当て（Cookie保存、URLオーバーライド対応）
+    const hadCookie = document.cookie.includes("lp_ab_variant");
+    const v = getVariantWithOverride();
+    setVariant(v);
+    setTrackingVariant(v);
+    trackVariantAssigned(v, !hadCookie);
+
     return () => window.removeEventListener("resize", check);
   }, []);
 
@@ -672,19 +729,37 @@ export default function SwipeLp() {
     trackSlideView(swiper.activeIndex);
   };
 
-  // CTA押下時: モバイルならSwiper最終スライドへ、PCならスクロール
+  // 縦スクロールモバイル版: スクロール位置からスライド番号を推定してトラッキング
+  const lastTrackedSlide = useRef(-1);
+  const handleScrollTracking = useCallback(() => {
+    if (typeof window === "undefined") return;
+    const sections = document.querySelectorAll("[data-slide-index]");
+    const viewportCenter = window.innerHeight / 2;
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top < viewportCenter && rect.bottom > viewportCenter) {
+        const idx = Number(section.getAttribute("data-slide-index"));
+        if (idx !== lastTrackedSlide.current) {
+          lastTrackedSlide.current = idx;
+          trackSlideView(idx);
+        }
+      }
+    });
+  }, []);
+
+  // CTA押下時の遷移
   const handleCtaClick = useCallback(() => {
-    if (isMobile && swiperRef.current) {
+    if (isMobile && variant === "swipe" && swiperRef.current) {
       swiperRef.current.slideTo(6);
     } else {
       document
         .getElementById("contact")
         ?.scrollIntoView({ behavior: "smooth" });
     }
-  }, [isMobile]);
+  }, [isMobile, variant]);
 
   const slides = [
-    <SlideHero key="hero" onCtaClick={handleCtaClick} />,
+    <SlideHero key="hero" onCtaClick={handleCtaClick} variant={variant} />,
     <SlidePains key="pains" />,
     <SlideReasons key="reasons" onCtaClick={handleCtaClick} />,
     <SlideWorks key="works" onCtaClick={handleCtaClick} />,
@@ -693,8 +768,8 @@ export default function SwipeLp() {
     <SlideCta key="cta" />,
   ];
 
-  // モバイル: 横スワイプ（cssMode=trueでネイティブscroll-snap使用）
-  if (isMobile) {
+  // モバイル + Variant A（swipe）: 横スワイプ
+  if (isMobile && variant === "swipe") {
     return (
       <Swiper
         key="horizontal-swiper"
@@ -728,6 +803,13 @@ export default function SwipeLp() {
           </SwiperSlide>
         ))}
       </Swiper>
+    );
+  }
+
+  // モバイル + Variant B（scroll）: 縦スクロール
+  if (isMobile && variant === "scroll") {
+    return (
+      <MobileScrollView slides={slides} onScroll={handleScrollTracking} />
     );
   }
 
