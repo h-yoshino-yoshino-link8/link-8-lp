@@ -693,20 +693,21 @@ export default function SwipeLp() {
     <SlideCta key="cta" />,
   ];
 
-  // モバイル: 縦スワイプ
+  // モバイル: 横スワイプ
   if (isMobile) {
     return (
       <Swiper
-        direction="horizontal"
         modules={[Pagination, Keyboard]}
-        pagination={{ clickable: true }}
-        keyboard={true}
+        pagination={{ clickable: true, type: "bullets" }}
+        keyboard={{ enabled: true, onlyInViewport: true }}
+        slidesPerView={1}
+        spaceBetween={0}
         speed={600}
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}
         onSlideChange={handleSlideChange}
-        className="swiper"
+        className="swiper swiper-horizontal"
       >
         {slides.map((slide, i) => (
           <SwiperSlide key={i}>{slide}</SwiperSlide>
