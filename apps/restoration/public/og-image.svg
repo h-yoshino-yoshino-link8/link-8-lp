@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#102a43"/>
+      <stop offset="100%" style="stop-color:#0f6b70"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <text x="100" y="200" font-family="system-ui,-apple-system,sans-serif" font-size="72" font-weight="700" fill="#ffffff">LinK</text>
+  <text x="100" y="260" font-family="system-ui,-apple-system,sans-serif" font-size="24" fill="#78d5da">つなぐ、整える。</text>
+  <line x1="100" y1="300" x2="300" y2="300" stroke="#78d5da" stroke-width="3"/>
+  <text x="100" y="370" font-family="system-ui,-apple-system,sans-serif" font-size="56" font-weight="600" fill="#ffffff">原状回復を、整える。</text>
+  <text x="100" y="430" font-family="system-ui,-apple-system,sans-serif" font-size="24" fill="#9fb3c8">内訳付き見積・中間搾取なし・写真付き進捗報告</text>
+  <text x="100" y="470" font-family="system-ui,-apple-system,sans-serif" font-size="22" fill="#9fb3c8">60社以上の専門家ネットワークで原状回復をまるごとサポート</text>
+  <text x="100" y="550" font-family="system-ui,-apple-system,sans-serif" font-size="18" fill="#627d98">株式会社LinK｜賃貸管理会社向け原状回復パートナー</text>
+  <text x="100" y="580" font-family="system-ui,-apple-system,sans-serif" font-size="16" fill="#486581">03-6825-2464｜関東一都三県対応｜まずは無料相談</text>
+</svg>
