@@ -8,6 +8,8 @@ import {
   trackSlideView,
   trackCtaClick,
   trackTelClick,
+  trackFormStart,
+  trackFormSubmit,
   setTrackingVariant,
   trackVariantAssigned,
 } from "@/lib/tracking";
@@ -20,6 +22,7 @@ import "swiper/css/pagination";
 const PHONE = "03-6825-2464";
 const PHONE_HREF = "tel:0368252464";
 const HP_URL = "https://link-8.jp";
+const FORMSPARK_ID = "qvZdUnofr";
 
 type SlideProps = {
   onCtaClick?: () => void;
@@ -568,81 +571,239 @@ function SlideFlow({ onCtaClick }: SlideProps) {
 }
 
 // ============================================================
-// Slide 7: 最終CTA
+// Slide 7: 最終CTA（インラインフォーム）
 // ============================================================
 function SlideCta() {
+  const [status, setStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
+  const [formStarted, setFormStarted] = useState(false);
+
+  const handleFocus = () => {
+    if (!formStarted) {
+      setFormStarted(true);
+      trackFormStart();
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("submitting");
+    trackCtaClick("final_cta_form");
+
+    const form = e.currentTarget;
+    const data = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      phone: (form.elements.namedItem("phone") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      _email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      _subject: "【LinK LP】原状回復の見積り依頼",
+      source: "lp-restoration",
+    };
+
+    try {
+      const res = await fetch(`https://submit-form.com/${FORMSPARK_ID}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        setStatus("success");
+        trackFormSubmit();
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  if (status === "success") {
+    return (
+      <div
+        id="contact"
+        className="w-full h-full bg-gradient-to-br from-link-navy via-[#1e3a5f] to-link-dark flex items-center justify-center px-4 md:px-8 md:py-20 lg:py-28"
+      >
+        <div className="w-full max-w-md md:max-w-2xl mx-auto text-center">
+          <div className="w-16 h-16 md:w-20 md:h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <span className="text-green-400 text-3xl md:text-4xl">✓</span>
+          </div>
+          <h2 className="text-white text-2xl md:text-4xl font-bold mb-4">
+            ご相談ありがとうございます
+          </h2>
+          <p className="text-white/70 text-sm md:text-lg mb-6">
+            担当（吉野）より原則24時間以内にご連絡いたします。
+            <br />
+            お急ぎの場合はお電話ください。
+          </p>
+          <a
+            href={PHONE_HREF}
+            onClick={() => trackTelClick()}
+            className="inline-block bg-white/20 hover:bg-white/30 text-white font-bold py-3 px-8 rounded-full border border-white/30 transition-colors"
+          >
+            電話で相談: {PHONE}
+          </a>
+          <div className="mt-8 pt-4 border-t border-white/10">
+            <a
+              href={HP_URL}
+              className="text-white/50 hover:text-white/80 text-xs md:text-sm underline underline-offset-4 transition-colors"
+            >
+              株式会社LinK 公式サイト →
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       id="contact"
       className="w-full h-full bg-gradient-to-br from-link-navy via-[#1e3a5f] to-link-dark flex items-center justify-center px-4 md:px-8 md:py-20 lg:py-28"
     >
-      <div className="w-full max-w-md md:max-w-2xl lg:max-w-3xl mx-auto text-center">
-        <p className="text-link-gold font-bold text-sm md:text-base tracking-wider mb-3">
-          CONTACT
-        </p>
-        <h2 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-5">
-          原状回復の発注先、
-          <br />
-          そろそろ変えませんか？
-        </h2>
-        <p className="text-white/70 text-sm md:text-lg mb-8 md:mb-10">
-          お見積りは最短3日。もちろん完全無料です。
-          <br />
-          今の業者との比較検討だけでもお気軽にどうぞ。
-        </p>
-
-        {/* CTAボタン */}
-        <div className="space-y-4 md:flex md:justify-center md:gap-4 md:space-y-0">
-          <a
-            href={`${HP_URL}/contact/construction`}
-            onClick={() => trackCtaClick("final_cta_form")}
-            className="cta-pulse block md:inline-block bg-link-orange hover:bg-accent-600 text-white font-bold text-lg md:text-xl py-4 px-8 md:px-12 rounded-full transition-colors"
-          >
-            無料で見積りを依頼する
-          </a>
-
-          <a
-            href={PHONE_HREF}
-            onClick={() => trackTelClick()}
-            className="block md:inline-block bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-bold py-3 md:py-4 px-8 md:px-10 rounded-full border border-white/30 transition-colors"
-          >
-            電話で相談: {PHONE}
-            <span className="block text-xs font-normal text-white/60 mt-0.5">
-              平日 9:00-18:00 / 担当: 吉野
-            </span>
-          </a>
+      <div className="w-full max-w-md md:max-w-2xl lg:max-w-3xl mx-auto">
+        <div className="text-center mb-6 md:mb-8">
+          <p className="text-link-gold font-bold text-sm md:text-base tracking-wider mb-3">
+            CONTACT
+          </p>
+          <h2 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-5">
+            原状回復の発注先、
+            <br />
+            そろそろ変えませんか？
+          </h2>
+          <p className="text-white/70 text-sm md:text-lg">
+            お見積りは最短3日。もちろん完全無料です。
+            <br className="hidden md:block" />
+            今の業者との比較検討だけでもお気軽にどうぞ。
+          </p>
         </div>
 
-        {/* ゼロリスクバッジ */}
-        <div className="flex flex-wrap justify-center gap-3 md:gap-4 mt-8 md:mt-10">
-          {[
-            "相談無料",
-            "現場調査無料",
-            "見積り無料",
-            "キャンセル料なし",
-            "契約の縛りなし",
-          ].map((badge) => (
-            <span
-              key={badge}
-              className="bg-link-gold/20 text-link-gold text-xs md:text-sm font-bold px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-link-gold/30"
+        {/* フォーム + 電話の2カラム（PC） */}
+        <div className="md:grid md:grid-cols-5 md:gap-8 md:items-start">
+          {/* インラインフォーム */}
+          <form
+            onSubmit={handleSubmit}
+            className="md:col-span-3 bg-white/10 backdrop-blur-sm rounded-2xl p-5 md:p-8 border border-white/20"
+          >
+            <p className="text-white font-bold text-base md:text-lg mb-4">
+              無料見積り相談フォーム
+            </p>
+            <div className="space-y-3 md:space-y-4">
+              <div>
+                <label
+                  htmlFor="contact-name"
+                  className="block text-white/70 text-xs md:text-sm mb-1"
+                >
+                  お名前 / 会社名 <span className="text-red-400">*</span>
+                </label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  required
+                  onFocus={handleFocus}
+                  placeholder="例：山田太郎 / ○○管理株式会社"
+                  className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-link-gold/50 focus:border-link-gold/50 text-sm md:text-base"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="contact-phone"
+                  className="block text-white/70 text-xs md:text-sm mb-1"
+                >
+                  電話番号 <span className="text-red-400">*</span>
+                </label>
+                <input
+                  id="contact-phone"
+                  name="phone"
+                  type="tel"
+                  required
+                  onFocus={handleFocus}
+                  placeholder="例：03-1234-5678"
+                  className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-link-gold/50 focus:border-link-gold/50 text-sm md:text-base"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="contact-email"
+                  className="block text-white/70 text-xs md:text-sm mb-1"
+                >
+                  メールアドレス <span className="text-red-400">*</span>
+                </label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  required
+                  onFocus={handleFocus}
+                  placeholder="例：yamada@example.co.jp"
+                  className="w-full bg-white/10 border border-white/30 rounded-lg px-4 py-3 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-link-gold/50 focus:border-link-gold/50 text-sm md:text-base"
+                />
+              </div>
+            </div>
+
+            {status === "error" && (
+              <p className="text-red-400 text-xs md:text-sm mt-3">
+                送信できませんでした。お手数ですが、お電話（{PHONE}）でもご相談いただけます。
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={status === "submitting"}
+              className="cta-pulse w-full mt-5 bg-link-orange hover:bg-accent-600 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-lg md:text-xl py-4 rounded-full transition-colors"
             >
-              ✓ {badge}
-            </span>
-          ))}
+              {status === "submitting" ? "送信中..." : "無料で見積りを依頼する"}
+            </button>
+
+            <p className="text-white/50 text-[10px] md:text-xs mt-3 text-center">
+              ※ しつこい営業は一切しません ／ 比較検討だけでもOK
+            </p>
+          </form>
+
+          {/* 電話 + 信頼バッジ（PC右カラム / モバイル下） */}
+          <div className="md:col-span-2 mt-6 md:mt-0 space-y-5">
+            <a
+              href={PHONE_HREF}
+              onClick={() => trackTelClick()}
+              className="block bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-bold py-4 px-6 rounded-2xl border border-white/30 transition-colors text-center"
+            >
+              <span className="text-xs text-white/60 block mb-1">
+                お急ぎの方はお電話で
+              </span>
+              <span className="text-lg md:text-xl">{PHONE}</span>
+              <span className="block text-xs font-normal text-white/60 mt-1">
+                平日 9:00-18:00 / 担当: 吉野
+              </span>
+            </a>
+
+            {/* ゼロリスクバッジ */}
+            <div className="flex flex-wrap justify-center gap-2">
+              {[
+                "相談無料",
+                "現場調査無料",
+                "見積り無料",
+                "キャンセル料なし",
+                "契約の縛りなし",
+              ].map((badge) => (
+                <span
+                  key={badge}
+                  className="bg-link-gold/20 text-link-gold text-[10px] md:text-xs font-bold px-2.5 py-1.5 rounded-full border border-link-gold/30"
+                >
+                  ✓ {badge}
+                </span>
+              ))}
+            </div>
+
+            {/* 希少性 */}
+            <p className="text-white/60 text-[10px] md:text-xs text-center">
+              関東一都三県限定 / 月間の受付枠に上限あり
+            </p>
+          </div>
         </div>
-
-        {/* 安心メッセージ */}
-        <p className="text-white/60 text-xs md:text-sm mt-4">
-          ※ しつこい営業は一切しません
-        </p>
-
-        {/* 希少性 */}
-        <p className="text-white/70 text-xs md:text-sm mt-2">
-          ※ 関東一都三県限定 / 月間の受付枠に上限があるため、お早めにご相談ください
-        </p>
 
         {/* HPリンク */}
-        <div className="mt-6 pt-4 border-t border-white/10">
+        <div className="mt-6 pt-4 border-t border-white/10 text-center">
           <a
             href={HP_URL}
             className="text-white/50 hover:text-white/80 text-xs md:text-sm underline underline-offset-4 transition-colors"

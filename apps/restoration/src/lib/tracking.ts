@@ -48,6 +48,10 @@ export function trackTelClick() {
   sendEvent("tel_click", { placement: "lp" });
 }
 
+export function trackFormStart() {
+  sendEvent("form_start", { channel: "lp_construction" });
+}
+
 export function trackFormSubmit() {
   sendEvent("form_submit", { channel: "lp_construction" });
 }
