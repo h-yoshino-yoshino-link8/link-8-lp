@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Mousewheel, Keyboard } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
@@ -13,10 +13,14 @@ const PHONE = "03-6825-2464";
 const PHONE_HREF = "tel:0368252464";
 const HP_URL = "https://link-8.jp";
 
+type SlideProps = {
+  onCtaClick?: () => void;
+};
+
 // ============================================================
 // Slide 1: ファーストビュー
 // ============================================================
-function SlideHero() {
+function SlideHero({ onCtaClick }: SlideProps) {
   return (
     <div className="relative w-full h-full bg-gradient-to-br from-link-navy via-[#1e3a5f] to-link-dark flex items-center justify-center overflow-hidden">
       {/* 背景パターン */}
@@ -33,35 +37,37 @@ function SlideHero() {
 
       <div className="relative z-10 text-center px-6 max-w-lg mx-auto">
         {/* ロゴ / 社名 */}
-        <p className="text-white/60 text-sm tracking-[0.3em] mb-6 animate-fade-in-up">
+        <p className="text-white/80 text-sm tracking-[0.3em] mb-6 animate-fade-in-up">
           株式会社LinK
         </p>
 
         {/* メインコピー */}
         <h1 className="text-white text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4 animate-fade-in-up animate-delay-100">
-          原状回復を、
+          見積もりの不透明、
           <br />
-          <span className="text-link-gold">整える。</span>
+          <span className="text-link-gold">終わりにする。</span>
         </h1>
 
         {/* サブコピー */}
         <p className="text-white/70 text-base sm:text-lg mb-8 animate-fade-in-up animate-delay-200">
-          つなぐ、整える。
+          関東一都三県・60社超の専門家ネットワーク。
           <br />
-          60社以上の専門家ネットワークで
+          内訳明示の見積り、写真付き進捗報告で
           <br className="sm:hidden" />
-          原状回復をまるごとサポート
+          原状回復業務を「丸投げ」できる体制に。
         </p>
 
         {/* CTA */}
         <div className="flex flex-col gap-3 animate-fade-in-up animate-delay-300">
-          <a
-            href="#contact"
-            onClick={() => trackCtaClick("hero_cta")}
+          <button
+            onClick={() => {
+              trackCtaClick("hero_cta");
+              onCtaClick?.();
+            }}
             className="cta-pulse inline-block bg-link-orange hover:bg-accent-600 text-white font-bold text-lg py-4 px-8 rounded-full transition-colors"
           >
-            無料で工事を相談する
-          </a>
+            まずは無料で見積り相談
+          </button>
           <a
             href={PHONE_HREF}
             onClick={() => trackTelClick()}
@@ -72,8 +78,13 @@ function SlideHero() {
         </div>
 
         {/* 信頼バッジ */}
-        <div className="flex justify-center gap-4 mt-8 animate-fade-in-up animate-delay-400">
-          {["建設業許可取得", "社会保険完備", "協力会社60社+"].map((badge) => (
+        <div className="flex justify-center gap-3 mt-8 animate-fade-in-up animate-delay-400 flex-wrap">
+          {[
+            "建設業許可取得",
+            "見積り完全無料",
+            "協力会社60社+",
+            "関東一都三県対応",
+          ].map((badge) => (
             <span
               key={badge}
               className="bg-white/10 backdrop-blur-sm text-white/90 text-xs px-3 py-1.5 rounded-full border border-white/20"
@@ -84,9 +95,10 @@ function SlideHero() {
         </div>
 
         {/* スクロールヒント */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-hint">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-hint flex flex-col items-center gap-1">
+          <span className="text-white/60 text-xs">スワイプして詳しく</span>
           <svg
-            className="w-6 h-6 text-white/40"
+            className="w-6 h-6 text-white/70"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -111,18 +123,18 @@ function SlidePains() {
   const pains = [
     {
       icon: "📋",
-      title: "見積もりが不透明",
-      desc: "何にいくらかかっているか分からない。内訳を求めても出てこない。",
+      title: "見積りがブラックボックス",
+      desc: "総額だけの見積書。オーナーに「なぜこの金額？」と聞かれても説明できない。",
     },
     {
       icon: "💸",
-      title: "中間マージンへの不安",
-      desc: "何社も挟んで費用が膨らんでいないか？適正価格が分からない。",
+      title: "中間マージン、何層分？",
+      desc: "元請→下請→孫請...工事費の何割が実際の工事に使われているのか、誰も教えてくれない。",
     },
     {
       icon: "👁️",
-      title: "進捗が見えない",
-      desc: "今どこまで進んでいるのか。完了報告まで現場の状況が分からない。",
+      title: "現場が動いているのか分からない",
+      desc: "「来週には終わります」の電話が3回目。入居者の引越し日は迫るのに、完了日が読めない。",
     },
   ];
 
@@ -133,17 +145,19 @@ function SlidePains() {
           PROBLEM
         </p>
         <h2 className="text-2xl font-bold text-link-dark mb-1">
-          こんなお悩みありませんか？
+          「また原状回復か...」
+          <br />
+          <span className="text-xl">そう思った瞬間、ありませんか？</span>
         </h2>
         <p className="text-link-gray text-sm mb-5">
-          管理会社様から多く寄せられる声です
+          管理会社様が共通して抱える3つの課題
         </p>
 
         <div className="space-y-4">
           {pains.map((pain, i) => (
             <div
               key={i}
-              className="bg-white rounded-xl p-5 shadow-sm border border-red-100 text-left flex gap-4 items-start"
+              className="bg-white rounded-xl p-5 shadow-md border border-slate-100 border-l-4 border-l-red-400 text-left flex gap-4 items-start"
             >
               <span className="text-2xl flex-shrink-0">{pain.icon}</span>
               <div>
@@ -159,9 +173,9 @@ function SlidePains() {
         </div>
 
         <p className="mt-6 text-link-dark font-bold text-lg">
-          その不安、
-          <span className="text-link-orange">LinK</span>
-          が解消します
+          この3つが全部解決したら、
+          <br />
+          <span className="text-link-orange">あなたの仕事はどう変わりますか？</span>
         </p>
       </div>
     </div>
@@ -171,26 +185,26 @@ function SlidePains() {
 // ============================================================
 // Slide 3: 選ばれる3つの理由
 // ============================================================
-function SlideReasons() {
+function SlideReasons({ onCtaClick }: SlideProps) {
   const reasons = [
     {
       num: "01",
-      title: "内訳付き見積",
-      desc: "材料費・人件費・諸経費をすべて明記。何にいくらかかるか一目で分かる見積書をお出しします。",
+      title: "オーナーにそのまま見せられる見積書",
+      desc: "材料費・人件費・諸経費を項目別に明記。オーナー説明用にそのまま使えるので、数字を組み替える手間がゼロに。",
       color: "bg-blue-50 border-blue-200",
       iconColor: "text-blue-600",
     },
     {
       num: "02",
-      title: "中間搾取なし",
-      desc: "専門工事会社と直接つなぐネットワーク。余計な中間マージンがないから適正価格を実現。",
+      title: "60社と直接だから、中間コストなし",
+      desc: "クロス、設備、ハウスクリーニング...各分野の専門会社60社超と直接契約。中間会社を挟まない分、コストを削減。",
       color: "bg-green-50 border-green-200",
       iconColor: "text-green-600",
     },
     {
       num: "03",
-      title: "写真付き進捗報告",
-      desc: "工事の各工程を写真で記録・共有。現場に行かなくてもリアルタイムで状況を把握できます。",
+      title: "「今、現場どうなってます？」が、なくなる",
+      desc: "工程ごとの写真付き報告をお送りします。完了予定日も明示するので、入居者・オーナーへの回答がその場で可能に。",
       color: "bg-amber-50 border-amber-200",
       iconColor: "text-amber-600",
     },
@@ -202,11 +216,12 @@ function SlideReasons() {
         <p className="text-link-navy font-bold text-sm tracking-wider mb-1">
           WHY LinK
         </p>
-        <h2 className="text-2xl font-bold text-link-dark mb-5">
-          選ばれる
-          <span className="text-link-orange">3</span>
-          つの理由
+        <h2 className="text-2xl font-bold text-link-dark mb-1">
+          管理会社様に「丸投げ」と言われる、
         </h2>
+        <p className="text-xl font-bold text-link-orange mb-5">
+          3つの仕組み
+        </p>
 
         <div className="space-y-4">
           {reasons.map((r) => (
@@ -220,7 +235,9 @@ function SlideReasons() {
                 >
                   {r.num}
                 </span>
-                <h3 className="font-bold text-link-dark text-lg">{r.title}</h3>
+                <h3 className="font-bold text-link-dark text-base">
+                  {r.title}
+                </h3>
               </div>
               <p className="text-link-gray text-sm leading-relaxed pl-10">
                 {r.desc}
@@ -228,6 +245,17 @@ function SlideReasons() {
             </div>
           ))}
         </div>
+
+        {/* 中間CTA */}
+        <button
+          onClick={() => {
+            trackCtaClick("mid_cta_reasons");
+            onCtaClick?.();
+          }}
+          className="mt-5 text-link-orange font-bold text-sm underline underline-offset-4 cursor-pointer hover:text-accent-600 transition-colors"
+        >
+          無料で見積りを相談する →
+        </button>
       </div>
     </div>
   );
@@ -236,7 +264,7 @@ function SlideReasons() {
 // ============================================================
 // Slide 4: 施工事例 Before/After
 // ============================================================
-function SlideWorks() {
+function SlideWorks({ onCtaClick }: SlideProps) {
   return (
     <div className="w-full h-full bg-slate-50 flex items-center justify-center px-4">
       <div className="w-full max-w-md mx-auto">
@@ -244,13 +272,18 @@ function SlideWorks() {
           <p className="text-link-navy font-bold text-sm tracking-wider mb-1">
             WORKS
           </p>
-          <h2 className="text-2xl font-bold text-link-dark">施工事例</h2>
+          <h2 className="text-2xl font-bold text-link-dark">
+            ビフォー・アフターで見る、
+            <br />
+            LinKの仕事
+          </h2>
         </div>
 
-        {/* 事例1: フル幅 */}
+        {/* 事例1 */}
         <div className="mb-5">
           <p className="text-sm font-bold text-link-dark mb-2 text-center">
-            1K マンション原状回復
+            1K マンション原状回復（25m&sup2;）
+            <span className="text-link-gray font-normal ml-1">/ 工期3日</span>
           </p>
           <div className="grid grid-cols-2 gap-2">
             <div className="relative">
@@ -285,10 +318,11 @@ function SlideWorks() {
           </div>
         </div>
 
-        {/* 事例2: フル幅 */}
+        {/* 事例2 */}
         <div className="mb-4">
           <p className="text-sm font-bold text-link-dark mb-2 text-center">
-            2LDK 水回りリフォーム
+            2LDK 水回りリフォーム（55m&sup2;）
+            <span className="text-link-gray font-normal ml-1">/ 工期5日</span>
           </p>
           <div className="grid grid-cols-2 gap-2">
             <div className="relative">
@@ -323,14 +357,28 @@ function SlideWorks() {
           </div>
         </div>
 
-        <div className="text-center">
+        <div className="text-center space-y-2">
           <a
             href={`${HP_URL}/works`}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() => trackCtaClick("works_more")}
             className="inline-block text-link-navy font-bold text-sm underline underline-offset-4 hover:text-link-orange transition-colors"
           >
-            施工事例をもっと見る →
+            他の施工事例もチェック →
           </a>
+          {/* 中間CTA */}
+          <div>
+            <button
+              onClick={() => {
+                trackCtaClick("mid_cta_works");
+                onCtaClick?.();
+              }}
+              className="text-link-orange font-bold text-sm underline underline-offset-4 cursor-pointer hover:text-accent-600 transition-colors"
+            >
+              無料で見積りを相談する →
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -348,7 +396,7 @@ function SlideProfile() {
           MESSAGE
         </p>
         <h2 className="text-2xl font-bold text-link-dark mb-4">
-          代表あいさつ
+          なぜLinKを作ったのか
         </h2>
 
         {/* プレースホルダー写真 */}
@@ -363,21 +411,28 @@ function SlideProfile() {
 
         <div className="bg-slate-50 rounded-xl p-5 text-left space-y-3">
           <p className="text-sm text-link-dark leading-relaxed">
-            建設業界で<strong>11年</strong>
-            。現場で感じた「不透明さ」をなくしたい。
-            その一心でLinKを立ち上げました。
+            建設業界で<strong className="text-link-navy">11年</strong>。
+            下請け時代に何度も見た光景があります。
           </p>
           <p className="text-sm text-link-dark leading-relaxed">
-            <strong>60社以上</strong>
-            の専門家ネットワークを活かし、
-            管理会社様が「原状回復を忘れられる状態」をつくることが私の使命です。
+            「結局いくらかかったの？」とオーナーに詰められる管理会社の担当者。
+            「来週には終わると言ったよね？」と入居者から電話を受ける担当者。
           </p>
-          <p className="text-sm text-link-dark leading-relaxed font-bold">
-            「建物に関わるすべての仕事を、まっとうにする。」
+          <p className="text-sm text-link-dark leading-relaxed">
+            原因はいつも同じ。情報が現場で止まっていること。
+            その&ldquo;不透明さ&rdquo;をゼロにする会社を作ろう。
+            <strong className="text-link-navy">60社</strong>の専門家と直接つながる仕組みを整えよう。
+            その想いひとつで、LinKを立ち上げました。
+          </p>
+          <p className="text-sm text-link-dark leading-relaxed font-bold border-t border-slate-200 pt-3">
+            目指しているのは、管理会社様が
+            <span className="text-link-orange">「原状回復を忘れられる状態」</span>。
+            <br />
+            建物に関わるすべての仕事を、まっとうにする。
           </p>
         </div>
 
-        <div className="flex justify-center gap-4 mt-4">
+        <div className="flex justify-center gap-3 mt-4 flex-wrap">
           <span className="bg-link-navy/5 text-link-navy text-xs px-3 py-1.5 rounded-full font-medium">
             業界歴11年
           </span>
@@ -396,28 +451,41 @@ function SlideProfile() {
 // ============================================================
 // Slide 6: ご利用の流れ
 // ============================================================
-function SlideFlow() {
+function SlideFlow({ onCtaClick }: SlideProps) {
   const steps = [
     {
       num: 1,
       title: "無料相談",
-      desc: "お電話・フォームで気軽にご相談",
+      desc: "電話・フォームで受付。物件情報をお伝えいただくだけでOK",
+      time: "当日対応",
       free: true,
     },
     {
       num: 2,
       title: "現場確認",
-      desc: "担当者が現場を訪問・調査",
+      desc: "担当者が現場を訪問。30分程度で調査完了。立会い不要もOK",
+      time: "翌営業日〜",
       free: true,
     },
     {
       num: 3,
       title: "見積提出",
-      desc: "内訳付きの明瞭な見積書",
+      desc: "内訳付き見積書をPDFでお送り。オーナー提出用にそのまま使えます",
+      time: "調査後1-2営業日",
       free: true,
     },
-    { num: 4, title: "工事開始", desc: "写真付きで進捗を随時報告", free: false },
-    { num: 5, title: "完了報告", desc: "仕上がり確認・お引き渡し", free: false },
+    {
+      num: 4,
+      title: "工事開始",
+      desc: "各工程の写真を随時お送り。完了予定日を明示します",
+      free: false,
+    },
+    {
+      num: 5,
+      title: "完了報告",
+      desc: "写真付き完了報告書をお渡し。検査後のお引き渡し",
+      free: false,
+    },
   ];
 
   return (
@@ -427,14 +495,14 @@ function SlideFlow() {
           FLOW
         </p>
         <h2 className="text-2xl font-bold text-link-dark mb-1">
-          ご利用の流れ
+          お問い合わせから最短3日で見積り提出
         </h2>
         <p className="text-link-orange font-bold text-sm mb-5">
-          見積りまですべて無料
+          ステップ3まで完全無料。費用が発生するのは工事決定後です。
         </p>
 
         <div className="space-y-3">
-          {steps.map((step, i) => (
+          {steps.map((step) => (
             <div key={step.num} className="flex items-center gap-4 text-left">
               {/* ステップ番号 */}
               <div
@@ -453,22 +521,35 @@ function SlideFlow() {
                   <h3 className="font-bold text-link-dark text-sm">
                     {step.title}
                   </h3>
-                  {step.free && (
-                    <span className="bg-link-orange/10 text-link-orange text-xs font-bold px-2 py-0.5 rounded">
-                      無料
-                    </span>
-                  )}
+                  <div className="flex items-center gap-1.5">
+                    {step.time && (
+                      <span className="text-link-gray text-xs">
+                        {step.time}
+                      </span>
+                    )}
+                    {step.free && (
+                      <span className="bg-link-orange/10 text-link-orange text-xs font-bold px-2 py-0.5 rounded">
+                        無料
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <p className="text-link-gray text-xs mt-0.5">{step.desc}</p>
               </div>
-
-              {/* コネクタライン */}
-              {i < steps.length - 1 && (
-                <div className="absolute left-[38px] mt-10 w-px h-3 bg-slate-200 hidden" />
-              )}
             </div>
           ))}
         </div>
+
+        {/* 中間CTA */}
+        <button
+          onClick={() => {
+            trackCtaClick("mid_cta_flow");
+            onCtaClick?.();
+          }}
+          className="mt-5 text-link-orange font-bold text-sm underline underline-offset-4 cursor-pointer hover:text-accent-600 transition-colors"
+        >
+          まずはSTEP 1の無料相談から →
+        </button>
       </div>
     </div>
   );
@@ -488,10 +569,14 @@ function SlideCta() {
           CONTACT
         </p>
         <h2 className="text-white text-2xl sm:text-3xl font-bold mb-3">
-          まずは無料でご相談ください
+          原状回復の発注先、
+          <br />
+          そろそろ変えませんか？
         </h2>
         <p className="text-white/70 text-sm mb-8">
-          見積りまで完全無料。お気軽にお問い合わせください。
+          お見積りは最短3日。もちろん完全無料です。
+          <br />
+          今の業者との比較検討だけでもお気軽にどうぞ。
         </p>
 
         {/* CTAボタン */}
@@ -501,15 +586,18 @@ function SlideCta() {
             onClick={() => trackCtaClick("final_cta_form")}
             className="cta-pulse block bg-link-orange hover:bg-accent-600 text-white font-bold text-lg py-4 px-8 rounded-full transition-colors"
           >
-            無料で工事を相談する
+            無料で見積りを依頼する
           </a>
 
           <a
             href={PHONE_HREF}
             onClick={() => trackTelClick()}
-            className="block bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-bold py-3 px-8 rounded-full border border-white/20 transition-colors"
+            className="block bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-bold py-3 px-8 rounded-full border border-white/30 transition-colors"
           >
-            📞 お電話: {PHONE}
+            電話で相談: {PHONE}
+            <span className="block text-xs font-normal text-white/60 mt-0.5">
+              平日 9:00-18:00 / 担当: 吉野
+            </span>
           </a>
         </div>
 
@@ -520,6 +608,7 @@ function SlideCta() {
             "現場調査無料",
             "見積り無料",
             "キャンセル料なし",
+            "契約の縛りなし",
           ].map((badge) => (
             <span
               key={badge}
@@ -530,9 +619,14 @@ function SlideCta() {
           ))}
         </div>
 
+        {/* 安心メッセージ */}
+        <p className="text-white/60 text-xs mt-4">
+          ※ しつこい営業は一切しません
+        </p>
+
         {/* 希少性 */}
-        <p className="text-white/50 text-xs mt-6">
-          ※ 対応エリア: 関東一都三県 / 繁忙期は受付を制限する場合がございます
+        <p className="text-white/70 text-xs mt-2">
+          ※ 関東一都三県限定 / 月間の受付枠に上限があるため、お早めにご相談ください
         </p>
 
         {/* HPリンク */}
@@ -567,13 +661,24 @@ export default function SwipeLp() {
     trackSlideView(swiper.activeIndex);
   };
 
+  // CTA押下時: モバイルならSwiper最終スライドへ、PCならスクロール
+  const handleCtaClick = useCallback(() => {
+    if (isMobile && swiperRef.current) {
+      swiperRef.current.slideTo(6);
+    } else {
+      document
+        .getElementById("contact")
+        ?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [isMobile]);
+
   const slides = [
-    <SlideHero key="hero" />,
+    <SlideHero key="hero" onCtaClick={handleCtaClick} />,
     <SlidePains key="pains" />,
-    <SlideReasons key="reasons" />,
-    <SlideWorks key="works" />,
+    <SlideReasons key="reasons" onCtaClick={handleCtaClick} />,
+    <SlideWorks key="works" onCtaClick={handleCtaClick} />,
     <SlideProfile key="profile" />,
-    <SlideFlow key="flow" />,
+    <SlideFlow key="flow" onCtaClick={handleCtaClick} />,
     <SlideCta key="cta" />,
   ];
 
