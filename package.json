@@ -1,27 +1,20 @@
 {
   "name": "link-8-lp",
-  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "next": "14.2.35",
-    "react": "^18",
-    "react-dom": "^18",
-    "swiper": "^12.1.1"
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "dev:restoration": "turbo dev --filter=@link8/lp-restoration",
+    "dev:recruit": "turbo dev --filter=@link8/lp-recruit",
+    "dev:partner": "turbo dev --filter=@link8/lp-partner",
+    "dev:casestudy": "turbo dev --filter=@link8/lp-casestudy",
+    "dev:renovation": "turbo dev --filter=@link8/lp-renovation",
+    "dev:solar": "turbo dev --filter=@link8/lp-solar",
+    "dev:area": "turbo dev --filter=@link8/lp-area"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.35",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
-  }
+    "turbo": "^2"
+  },
+  "packageManager": "pnpm@9.15.0"
 }
