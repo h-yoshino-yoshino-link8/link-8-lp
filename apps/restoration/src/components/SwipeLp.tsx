@@ -94,11 +94,11 @@ function SlideHero({ onCtaClick }: SlideProps) {
           ))}
         </div>
 
-        {/* スクロールヒント（モバイルのみ） */}
+        {/* スワイプヒント（モバイルのみ） */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-hint flex flex-col items-center gap-1 md:hidden">
-          <span className="text-white/60 text-xs">スワイプして詳しく</span>
+          <span className="text-white/60 text-xs">横にスワイプ →</span>
           <svg
-            className="w-6 h-6 text-white/70"
+            className="w-6 h-6 text-white/70 rotate-[-90deg]"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -697,7 +697,7 @@ export default function SwipeLp() {
   if (isMobile) {
     return (
       <Swiper
-        direction="vertical"
+        direction="horizontal"
         modules={[Pagination, Mousewheel, Keyboard]}
         pagination={{ clickable: true }}
         mousewheel={true}
