@@ -127,15 +127,15 @@ function SlidePains() {
   ];
 
   return (
-    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-6">
-      <div className="max-w-lg mx-auto text-center">
-        <p className="text-link-orange font-bold text-sm tracking-wider mb-2">
+    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-4">
+      <div className="w-full max-w-md mx-auto text-center">
+        <p className="text-link-orange font-bold text-sm tracking-wider mb-1">
           PROBLEM
         </p>
-        <h2 className="text-2xl sm:text-3xl font-bold text-link-dark mb-2">
+        <h2 className="text-2xl font-bold text-link-dark mb-1">
           こんなお悩みありませんか？
         </h2>
-        <p className="text-link-gray text-sm mb-8">
+        <p className="text-link-gray text-sm mb-5">
           管理会社様から多く寄せられる声です
         </p>
 
@@ -197,12 +197,12 @@ function SlideReasons() {
   ];
 
   return (
-    <div className="w-full h-full bg-white flex items-center justify-center px-6">
-      <div className="max-w-lg mx-auto text-center">
-        <p className="text-link-navy font-bold text-sm tracking-wider mb-2">
+    <div className="w-full h-full bg-white flex items-center justify-center px-4">
+      <div className="w-full max-w-md mx-auto text-center">
+        <p className="text-link-navy font-bold text-sm tracking-wider mb-1">
           WHY LinK
         </p>
-        <h2 className="text-2xl sm:text-3xl font-bold text-link-dark mb-8">
+        <h2 className="text-2xl font-bold text-link-dark mb-5">
           選ばれる
           <span className="text-link-orange">3</span>
           つの理由
@@ -237,62 +237,101 @@ function SlideReasons() {
 // Slide 4: 施工事例 Before/After
 // ============================================================
 function SlideWorks() {
-  const works = [
-    { label: "1K マンション原状回復", before: "#94a3b8", after: "#3b82f6" },
-    { label: "2LDK 水回りリフォーム", before: "#94a3b8", after: "#3b82f6" },
-  ];
-
   return (
-    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-6">
-      <div className="max-w-lg mx-auto text-center">
-        <p className="text-link-navy font-bold text-sm tracking-wider mb-2">
-          WORKS
-        </p>
-        <h2 className="text-2xl sm:text-3xl font-bold text-link-dark mb-8">
-          施工事例
-        </h2>
-
-        <div className="space-y-6">
-          {works.map((w, i) => (
-            <div key={i}>
-              <p className="text-sm font-bold text-link-dark mb-3">
-                {w.label}
-              </p>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="relative">
-                  <div
-                    className="aspect-[4/3] rounded-lg flex items-center justify-center text-white font-bold"
-                    style={{ backgroundColor: w.before }}
-                  >
-                    Before
-                  </div>
-                  <span className="absolute top-2 left-2 bg-black/60 text-white text-xs px-2 py-0.5 rounded">
-                    施工前
-                  </span>
-                </div>
-                <div className="relative">
-                  <div
-                    className="aspect-[4/3] rounded-lg flex items-center justify-center text-white font-bold"
-                    style={{ backgroundColor: w.after }}
-                  >
-                    After
-                  </div>
-                  <span className="absolute top-2 left-2 bg-link-orange text-white text-xs px-2 py-0.5 rounded">
-                    施工後
-                  </span>
-                </div>
-              </div>
-            </div>
-          ))}
+    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-4">
+      <div className="w-full max-w-md mx-auto">
+        <div className="text-center mb-5">
+          <p className="text-link-navy font-bold text-sm tracking-wider mb-1">
+            WORKS
+          </p>
+          <h2 className="text-2xl font-bold text-link-dark">施工事例</h2>
         </div>
 
-        <a
-          href={`${HP_URL}/works`}
-          onClick={() => trackCtaClick("works_more")}
-          className="inline-block mt-6 text-link-navy font-bold text-sm underline underline-offset-4 hover:text-link-orange transition-colors"
-        >
-          施工事例をもっと見る →
-        </a>
+        {/* 事例1: フル幅 */}
+        <div className="mb-5">
+          <p className="text-sm font-bold text-link-dark mb-2 text-center">
+            1K マンション原状回復
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="relative">
+              <div
+                className="aspect-[3/4] rounded-xl flex items-end justify-center text-white/60 font-bold text-lg pb-4"
+                style={{
+                  backgroundColor: "#78716c",
+                  backgroundImage:
+                    "linear-gradient(135deg, #78716c 0%, #a8a29e 50%, #78716c 100%)",
+                }}
+              >
+                Before
+              </div>
+              <span className="absolute top-2 left-2 bg-black/70 text-white text-xs font-bold px-2.5 py-1 rounded-md">
+                施工前
+              </span>
+            </div>
+            <div className="relative">
+              <div
+                className="aspect-[3/4] rounded-xl flex items-end justify-center text-white/80 font-bold text-lg pb-4"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(135deg, #1d4ed8 0%, #3b82f6 50%, #60a5fa 100%)",
+                }}
+              >
+                After
+              </div>
+              <span className="absolute top-2 left-2 bg-link-orange text-white text-xs font-bold px-2.5 py-1 rounded-md">
+                施工後
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* 事例2: フル幅 */}
+        <div className="mb-4">
+          <p className="text-sm font-bold text-link-dark mb-2 text-center">
+            2LDK 水回りリフォーム
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            <div className="relative">
+              <div
+                className="aspect-[3/4] rounded-xl flex items-end justify-center text-white/60 font-bold text-lg pb-4"
+                style={{
+                  backgroundColor: "#78716c",
+                  backgroundImage:
+                    "linear-gradient(135deg, #57534e 0%, #a8a29e 50%, #78716c 100%)",
+                }}
+              >
+                Before
+              </div>
+              <span className="absolute top-2 left-2 bg-black/70 text-white text-xs font-bold px-2.5 py-1 rounded-md">
+                施工前
+              </span>
+            </div>
+            <div className="relative">
+              <div
+                className="aspect-[3/4] rounded-xl flex items-end justify-center text-white/80 font-bold text-lg pb-4"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(135deg, #0369a1 0%, #0ea5e9 50%, #38bdf8 100%)",
+                }}
+              >
+                After
+              </div>
+              <span className="absolute top-2 left-2 bg-link-orange text-white text-xs font-bold px-2.5 py-1 rounded-md">
+                施工後
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-center">
+          <a
+            href={`${HP_URL}/works`}
+            onClick={() => trackCtaClick("works_more")}
+            className="inline-block text-link-navy font-bold text-sm underline underline-offset-4 hover:text-link-orange transition-colors"
+          >
+            施工事例をもっと見る →
+          </a>
+        </div>
       </div>
     </div>
   );
@@ -303,22 +342,22 @@ function SlideWorks() {
 // ============================================================
 function SlideProfile() {
   return (
-    <div className="w-full h-full bg-white flex items-center justify-center px-6">
-      <div className="max-w-lg mx-auto text-center">
-        <p className="text-link-navy font-bold text-sm tracking-wider mb-2">
+    <div className="w-full h-full bg-white flex items-center justify-center px-4">
+      <div className="w-full max-w-md mx-auto text-center">
+        <p className="text-link-navy font-bold text-sm tracking-wider mb-1">
           MESSAGE
         </p>
-        <h2 className="text-2xl sm:text-3xl font-bold text-link-dark mb-6">
+        <h2 className="text-2xl font-bold text-link-dark mb-4">
           代表あいさつ
         </h2>
 
         {/* プレースホルダー写真 */}
-        <div className="w-32 h-32 rounded-full bg-gradient-to-br from-link-navy to-link-dark mx-auto mb-4 flex items-center justify-center">
-          <span className="text-white text-4xl font-bold">Y</span>
+        <div className="w-24 h-24 rounded-full bg-gradient-to-br from-link-navy to-link-dark mx-auto mb-3 flex items-center justify-center">
+          <span className="text-white text-3xl font-bold">Y</span>
         </div>
 
-        <h3 className="text-xl font-bold text-link-dark mb-1">吉野 博</h3>
-        <p className="text-link-gray text-sm mb-4">
+        <h3 className="text-lg font-bold text-link-dark mb-0.5">吉野 博</h3>
+        <p className="text-link-gray text-sm mb-3">
           株式会社LinK 代表取締役
         </p>
 
@@ -382,15 +421,15 @@ function SlideFlow() {
   ];
 
   return (
-    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-6">
-      <div className="max-w-lg mx-auto text-center">
-        <p className="text-link-navy font-bold text-sm tracking-wider mb-2">
+    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-4">
+      <div className="w-full max-w-md mx-auto text-center">
+        <p className="text-link-navy font-bold text-sm tracking-wider mb-1">
           FLOW
         </p>
-        <h2 className="text-2xl sm:text-3xl font-bold text-link-dark mb-2">
+        <h2 className="text-2xl font-bold text-link-dark mb-1">
           ご利用の流れ
         </h2>
-        <p className="text-link-orange font-bold text-sm mb-8">
+        <p className="text-link-orange font-bold text-sm mb-5">
           見積りまですべて無料
         </p>
 
@@ -442,10 +481,10 @@ function SlideCta() {
   return (
     <div
       id="contact"
-      className="w-full h-full bg-gradient-to-br from-link-navy via-[#1e3a5f] to-link-dark flex items-center justify-center px-6"
+      className="w-full h-full bg-gradient-to-br from-link-navy via-[#1e3a5f] to-link-dark flex items-center justify-center px-4"
     >
-      <div className="max-w-lg mx-auto text-center">
-        <p className="text-link-gold font-bold text-sm tracking-wider mb-4">
+      <div className="w-full max-w-md mx-auto text-center">
+        <p className="text-link-gold font-bold text-sm tracking-wider mb-3">
           CONTACT
         </p>
         <h2 className="text-white text-2xl sm:text-3xl font-bold mb-3">
