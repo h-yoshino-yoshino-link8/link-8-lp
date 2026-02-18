@@ -11,7 +11,7 @@ import "swiper/css/pagination";
 
 const PHONE = "03-6825-2464";
 const PHONE_HREF = "tel:0368252464";
-const HP_URL = "https://link-8-site.vercel.app";
+const HP_URL = "https://link-8.jp";
 
 // ============================================================
 // Slide 1: ファーストビュー

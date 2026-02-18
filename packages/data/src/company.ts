@@ -1,6 +1,6 @@
 export const PHONE = "03-6825-2464";
 export const PHONE_HREF = "tel:0368252464";
-export const HP_URL = "https://link-8-site.vercel.app";
+export const HP_URL = "https://link-8.jp";
 
 export const company = {
   name: "株式会社LinK",
