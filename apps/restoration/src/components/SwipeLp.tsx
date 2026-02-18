@@ -12,6 +12,7 @@ import {
   trackVariantAssigned,
 } from "@/lib/tracking";
 import { getVariantWithOverride, type ABVariant } from "@/lib/ab-test";
+import Image from "next/image";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -294,36 +295,31 @@ function SlideWorks({ onCtaClick }: SlideProps) {
           {/* 事例1 */}
           <div>
             <p className="text-sm md:text-base font-bold text-link-dark mb-2 text-center">
-              1K マンション原状回復（25m&sup2;）
-              <span className="text-link-gray font-normal ml-1">/ 工期3日</span>
+              タワーマンション原状回復（2LDK）
+              <span className="text-link-gray font-normal ml-1">/ 壁紙補修・内装工事</span>
             </p>
             <div className="grid grid-cols-2 gap-2 md:gap-3">
-              <div className="relative">
-                <div
-                  className="aspect-[3/4] md:aspect-[4/3] rounded-xl flex items-end justify-center text-white/60 font-bold text-lg pb-4"
-                  style={{
-                    backgroundColor: "#78716c",
-                    backgroundImage:
-                      "linear-gradient(135deg, #78716c 0%, #a8a29e 50%, #78716c 100%)",
-                  }}
-                >
-                  Before
-                </div>
-                <span className="absolute top-2 left-2 bg-black/70 text-white text-xs font-bold px-2.5 py-1 rounded-md">
+              <div className="relative aspect-[3/4] md:aspect-[4/3] rounded-xl overflow-hidden">
+                <Image
+                  src="/images/case1-before.jpg"
+                  alt="施工前：壁パネルの破損"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 45vw, 400px"
+                />
+                <span className="absolute top-2 left-2 bg-black/70 text-white text-xs font-bold px-2.5 py-1 rounded-md z-10">
                   施工前
                 </span>
               </div>
-              <div className="relative">
-                <div
-                  className="aspect-[3/4] md:aspect-[4/3] rounded-xl flex items-end justify-center text-white/80 font-bold text-lg pb-4"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(135deg, #1d4ed8 0%, #3b82f6 50%, #60a5fa 100%)",
-                  }}
-                >
-                  After
-                </div>
-                <span className="absolute top-2 left-2 bg-link-orange text-white text-xs font-bold px-2.5 py-1 rounded-md">
+              <div className="relative aspect-[3/4] md:aspect-[4/3] rounded-xl overflow-hidden">
+                <Image
+                  src="/images/case1-after.jpg"
+                  alt="施工後：きれいに復元されたリビング"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 45vw, 400px"
+                />
+                <span className="absolute top-2 left-2 bg-link-orange text-white text-xs font-bold px-2.5 py-1 rounded-md z-10">
                   施工後
                 </span>
               </div>
@@ -333,36 +329,31 @@ function SlideWorks({ onCtaClick }: SlideProps) {
           {/* 事例2 */}
           <div>
             <p className="text-sm md:text-base font-bold text-link-dark mb-2 text-center">
-              2LDK 水回りリフォーム（55m&sup2;）
-              <span className="text-link-gray font-normal ml-1">/ 工期5日</span>
+              タワーマンション原状回復（2LDK）
+              <span className="text-link-gray font-normal ml-1">/ クロス全面張替</span>
             </p>
             <div className="grid grid-cols-2 gap-2 md:gap-3">
-              <div className="relative">
-                <div
-                  className="aspect-[3/4] md:aspect-[4/3] rounded-xl flex items-end justify-center text-white/60 font-bold text-lg pb-4"
-                  style={{
-                    backgroundColor: "#78716c",
-                    backgroundImage:
-                      "linear-gradient(135deg, #57534e 0%, #a8a29e 50%, #78716c 100%)",
-                  }}
-                >
-                  Before
-                </div>
-                <span className="absolute top-2 left-2 bg-black/70 text-white text-xs font-bold px-2.5 py-1 rounded-md">
+              <div className="relative aspect-[3/4] md:aspect-[4/3] rounded-xl overflow-hidden">
+                <Image
+                  src="/images/case2-before.jpg"
+                  alt="施工前：壁紙の剥がれ・損傷"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 45vw, 400px"
+                />
+                <span className="absolute top-2 left-2 bg-black/70 text-white text-xs font-bold px-2.5 py-1 rounded-md z-10">
                   施工前
                 </span>
               </div>
-              <div className="relative">
-                <div
-                  className="aspect-[3/4] md:aspect-[4/3] rounded-xl flex items-end justify-center text-white/80 font-bold text-lg pb-4"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(135deg, #0369a1 0%, #0ea5e9 50%, #38bdf8 100%)",
-                  }}
-                >
-                  After
-                </div>
-                <span className="absolute top-2 left-2 bg-link-orange text-white text-xs font-bold px-2.5 py-1 rounded-md">
+              <div className="relative aspect-[3/4] md:aspect-[4/3] rounded-xl overflow-hidden">
+                <Image
+                  src="/images/case2-after.jpg"
+                  alt="施工後：きれいに仕上がった洋室"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 45vw, 400px"
+                />
+                <span className="absolute top-2 left-2 bg-link-orange text-white text-xs font-bold px-2.5 py-1 rounded-md z-10">
                   施工後
                 </span>
               </div>
