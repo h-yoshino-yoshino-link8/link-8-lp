@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Mousewheel, Keyboard } from "swiper/modules";
+import { Pagination, Keyboard } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import { trackSlideView, trackCtaClick, trackTelClick } from "@/lib/tracking";
 
