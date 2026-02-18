@@ -10,6 +10,9 @@ import {
   trackTelClick,
   trackFormStart,
   trackFormSubmit,
+  trackFormAbandon,
+  trackScrollDepth,
+  trackSectionView,
   setTrackingVariant,
   trackVariantAssigned,
 } from "@/lib/tracking";
@@ -578,13 +581,26 @@ function SlideCta() {
     "idle" | "submitting" | "success" | "error"
   >("idle");
   const [formStarted, setFormStarted] = useState(false);
+  const formStartedRef = useRef(false);
 
   const handleFocus = () => {
     if (!formStarted) {
       setFormStarted(true);
+      formStartedRef.current = true;
       trackFormStart();
     }
   };
+
+  // フォーム入力開始後にページ離脱→form_abandon
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (formStartedRef.current && status !== "success") {
+        trackFormAbandon();
+      }
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [status]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -877,6 +893,50 @@ export default function SwipeLp() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
+  // PC版: スクロール深度計測（25/50/75/100%）
+  const trackedDepths = useRef(new Set<number>());
+  useEffect(() => {
+    if (isMobile) return;
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (docHeight <= 0) return;
+      const pct = Math.round((scrollTop / docHeight) * 100);
+      for (const threshold of [25, 50, 75, 100]) {
+        if (pct >= threshold && !trackedDepths.current.has(threshold)) {
+          trackedDepths.current.add(threshold);
+          trackScrollDepth(threshold);
+        }
+      }
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isMobile]);
+
+  // PC版: セクション到達計測（Intersection Observer）
+  const trackedSections = useRef(new Set<string>());
+  useEffect(() => {
+    if (isMobile) return;
+    const sectionNames = ["hero", "pains", "reasons", "works", "profile", "flow", "contact"];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const name = entry.target.getAttribute("data-section") || "";
+            if (name && !trackedSections.current.has(name)) {
+              trackedSections.current.add(name);
+              trackSectionView(name);
+            }
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+    const sections = document.querySelectorAll("[data-section]");
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, [isMobile]);
+
   const handleSlideChange = (swiper: SwiperType) => {
     trackSlideView(swiper.activeIndex);
   };
@@ -966,11 +1026,13 @@ export default function SwipeLp() {
   }
 
   // PC: 通常スクロール（Heroのみフルビューポート、他はコンテンツベース）
+  const sectionNames = ["hero", "pains", "reasons", "works", "profile", "flow", "contact"];
   return (
     <div className="w-full">
       {slides.map((slide, i) => (
         <section
           key={i}
+          data-section={sectionNames[i]}
           className={i === 0 ? "h-screen" : ""}
         >
           {slide}

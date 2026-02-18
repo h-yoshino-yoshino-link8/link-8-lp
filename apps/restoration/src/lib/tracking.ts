@@ -56,6 +56,18 @@ export function trackFormSubmit() {
   sendEvent("form_submit", { channel: "lp_construction" });
 }
 
+export function trackFormAbandon() {
+  sendEvent("form_abandon", { channel: "lp_construction" });
+}
+
+export function trackScrollDepth(percent: number) {
+  sendEvent("scroll_depth", { percent, page: "lp" });
+}
+
+export function trackSectionView(section: string) {
+  sendEvent("section_view", { section, page: "lp" });
+}
+
 // A/Bテスト: バリアント割り当てイベント（セッション開始時に1回）
 export function trackVariantAssigned(variant: ABVariant, isNew: boolean) {
   sendEvent("ab_variant_assigned", {
