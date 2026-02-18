@@ -35,21 +35,21 @@ function SlideHero({ onCtaClick }: SlideProps) {
         />
       </div>
 
-      <div className="relative z-10 text-center px-6 max-w-lg mx-auto">
+      <div className="relative z-10 text-center px-6 max-w-lg md:max-w-3xl lg:max-w-4xl mx-auto">
         {/* ロゴ / 社名 */}
-        <p className="text-white/80 text-sm tracking-[0.3em] mb-6 animate-fade-in-up">
+        <p className="text-white/80 text-sm md:text-base tracking-[0.3em] mb-6 md:mb-8 animate-fade-in-up">
           株式会社LinK
         </p>
 
         {/* メインコピー */}
-        <h1 className="text-white text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-4 animate-fade-in-up animate-delay-100">
+        <h1 className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 md:mb-6 animate-fade-in-up animate-delay-100">
           見積もりの不透明、
           <br />
           <span className="text-link-gold">終わりにする。</span>
         </h1>
 
         {/* サブコピー */}
-        <p className="text-white/70 text-base sm:text-lg mb-8 animate-fade-in-up animate-delay-200">
+        <p className="text-white/70 text-base sm:text-lg md:text-xl mb-8 md:mb-10 animate-fade-in-up animate-delay-200 md:max-w-2xl md:mx-auto">
           関東一都三県・60社超の専門家ネットワーク。
           <br />
           内訳明示の見積り、写真付き進捗報告で
@@ -58,27 +58,27 @@ function SlideHero({ onCtaClick }: SlideProps) {
         </p>
 
         {/* CTA */}
-        <div className="flex flex-col gap-3 animate-fade-in-up animate-delay-300">
+        <div className="flex flex-col md:flex-row md:justify-center gap-3 md:gap-4 animate-fade-in-up animate-delay-300">
           <button
             onClick={() => {
               trackCtaClick("hero_cta");
               onCtaClick?.();
             }}
-            className="cta-pulse inline-block bg-link-orange hover:bg-accent-600 text-white font-bold text-lg py-4 px-8 rounded-full transition-colors"
+            className="cta-pulse inline-block bg-link-orange hover:bg-accent-600 text-white font-bold text-lg md:text-xl py-4 px-8 md:px-12 rounded-full transition-colors"
           >
             まずは無料で見積り相談
           </button>
           <a
             href={PHONE_HREF}
             onClick={() => trackTelClick()}
-            className="inline-block text-white/80 hover:text-white text-sm underline underline-offset-4"
+            className="inline-block text-white/80 hover:text-white text-sm md:text-base underline underline-offset-4 md:self-center"
           >
             お電話はこちら: {PHONE}
           </a>
         </div>
 
         {/* 信頼バッジ */}
-        <div className="flex justify-center gap-3 mt-8 animate-fade-in-up animate-delay-400 flex-wrap">
+        <div className="flex justify-center gap-3 md:gap-4 mt-8 md:mt-10 animate-fade-in-up animate-delay-400 flex-wrap">
           {[
             "建設業許可取得",
             "見積り完全無料",
@@ -87,7 +87,7 @@ function SlideHero({ onCtaClick }: SlideProps) {
           ].map((badge) => (
             <span
               key={badge}
-              className="bg-white/10 backdrop-blur-sm text-white/90 text-xs px-3 py-1.5 rounded-full border border-white/20"
+              className="bg-white/10 backdrop-blur-sm text-white/90 text-xs md:text-sm px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-white/20"
             >
               {badge}
             </span>
@@ -96,7 +96,8 @@ function SlideHero({ onCtaClick }: SlideProps) {
 
         {/* スクロールヒント */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-hint flex flex-col items-center gap-1">
-          <span className="text-white/60 text-xs">スワイプして詳しく</span>
+          <span className="text-white/60 text-xs md:text-sm md:hidden">スワイプして詳しく</span>
+          <span className="text-white/60 text-sm hidden md:block">スクロールして詳しく</span>
           <svg
             className="w-6 h-6 text-white/70"
             fill="none"
@@ -139,32 +140,32 @@ function SlidePains() {
   ];
 
   return (
-    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-md mx-auto text-center">
-        <p className="text-link-orange font-bold text-sm tracking-wider mb-1">
+    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-4 md:px-8">
+      <div className="w-full max-w-md md:max-w-3xl lg:max-w-4xl mx-auto text-center">
+        <p className="text-link-orange font-bold text-sm md:text-base tracking-wider mb-1">
           PROBLEM
         </p>
-        <h2 className="text-2xl font-bold text-link-dark mb-1">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-link-dark mb-1">
           「また原状回復か...」
           <br />
-          <span className="text-xl">そう思った瞬間、ありませんか？</span>
+          <span className="text-xl md:text-2xl lg:text-3xl">そう思った瞬間、ありませんか？</span>
         </h2>
-        <p className="text-link-gray text-sm mb-5">
+        <p className="text-link-gray text-sm md:text-base mb-5 md:mb-8">
           管理会社様が共通して抱える3つの課題
         </p>
 
-        <div className="space-y-4">
+        <div className="space-y-4 md:space-y-0 md:grid md:grid-cols-3 md:gap-6">
           {pains.map((pain, i) => (
             <div
               key={i}
-              className="bg-white rounded-xl p-5 shadow-md border border-slate-100 border-l-4 border-l-red-400 text-left flex gap-4 items-start"
+              className="bg-white rounded-xl p-5 md:p-6 shadow-md border border-slate-100 border-l-4 border-l-red-400 text-left flex gap-4 items-start md:flex-col md:items-center md:text-center md:border-l-0 md:border-t-4 md:border-t-red-400"
             >
-              <span className="text-2xl flex-shrink-0">{pain.icon}</span>
+              <span className="text-2xl md:text-4xl flex-shrink-0">{pain.icon}</span>
               <div>
-                <h3 className="font-bold text-link-dark text-base mb-1">
+                <h3 className="font-bold text-link-dark text-base md:text-lg mb-1 md:mb-2">
                   {pain.title}
                 </h3>
-                <p className="text-link-gray text-sm leading-relaxed">
+                <p className="text-link-gray text-sm md:text-base leading-relaxed">
                   {pain.desc}
                 </p>
               </div>
@@ -172,7 +173,7 @@ function SlidePains() {
           ))}
         </div>
 
-        <p className="mt-6 text-link-dark font-bold text-lg">
+        <p className="mt-6 md:mt-10 text-link-dark font-bold text-lg md:text-xl">
           この3つが全部解決したら、
           <br />
           <span className="text-link-orange">あなたの仕事はどう変わりますか？</span>
@@ -211,35 +212,35 @@ function SlideReasons({ onCtaClick }: SlideProps) {
   ];
 
   return (
-    <div className="w-full h-full bg-white flex items-center justify-center px-4">
-      <div className="w-full max-w-md mx-auto text-center">
-        <p className="text-link-navy font-bold text-sm tracking-wider mb-1">
+    <div className="w-full h-full bg-white flex items-center justify-center px-4 md:px-8">
+      <div className="w-full max-w-md md:max-w-3xl lg:max-w-4xl mx-auto text-center">
+        <p className="text-link-navy font-bold text-sm md:text-base tracking-wider mb-1">
           WHY LinK
         </p>
-        <h2 className="text-2xl font-bold text-link-dark mb-1">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-link-dark mb-1">
           管理会社様に「丸投げ」と言われる、
         </h2>
-        <p className="text-xl font-bold text-link-orange mb-5">
+        <p className="text-xl md:text-2xl font-bold text-link-orange mb-5 md:mb-8">
           3つの仕組み
         </p>
 
-        <div className="space-y-4">
+        <div className="space-y-4 md:space-y-0 md:grid md:grid-cols-3 md:gap-6">
           {reasons.map((r) => (
             <div
               key={r.num}
-              className={`rounded-xl p-5 border ${r.color} text-left`}
+              className={`rounded-xl p-5 md:p-6 border ${r.color} text-left md:text-center`}
             >
-              <div className="flex items-center gap-3 mb-2">
+              <div className="flex items-center gap-3 mb-2 md:flex-col md:items-center md:gap-2 md:mb-3">
                 <span
-                  className={`${r.iconColor} font-black text-2xl leading-none`}
+                  className={`${r.iconColor} font-black text-2xl md:text-4xl leading-none`}
                 >
                   {r.num}
                 </span>
-                <h3 className="font-bold text-link-dark text-base">
+                <h3 className="font-bold text-link-dark text-base md:text-lg">
                   {r.title}
                 </h3>
               </div>
-              <p className="text-link-gray text-sm leading-relaxed pl-10">
+              <p className="text-link-gray text-sm md:text-base leading-relaxed pl-10 md:pl-0">
                 {r.desc}
               </p>
             </div>
@@ -252,7 +253,7 @@ function SlideReasons({ onCtaClick }: SlideProps) {
             trackCtaClick("mid_cta_reasons");
             onCtaClick?.();
           }}
-          className="mt-5 text-link-orange font-bold text-sm underline underline-offset-4 cursor-pointer hover:text-accent-600 transition-colors"
+          className="mt-5 md:mt-8 text-link-orange font-bold text-sm md:text-base underline underline-offset-4 cursor-pointer hover:text-accent-600 transition-colors"
         >
           無料で見積りを相談する →
         </button>
@@ -266,104 +267,107 @@ function SlideReasons({ onCtaClick }: SlideProps) {
 // ============================================================
 function SlideWorks({ onCtaClick }: SlideProps) {
   return (
-    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-md mx-auto">
-        <div className="text-center mb-5">
-          <p className="text-link-navy font-bold text-sm tracking-wider mb-1">
+    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-4 md:px-8">
+      <div className="w-full max-w-md md:max-w-3xl lg:max-w-4xl mx-auto">
+        <div className="text-center mb-5 md:mb-8">
+          <p className="text-link-navy font-bold text-sm md:text-base tracking-wider mb-1">
             WORKS
           </p>
-          <h2 className="text-2xl font-bold text-link-dark">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-link-dark">
             ビフォー・アフターで見る、
-            <br />
+            <br className="md:hidden" />
             LinKの仕事
           </h2>
         </div>
 
-        {/* 事例1 */}
-        <div className="mb-5">
-          <p className="text-sm font-bold text-link-dark mb-2 text-center">
-            1K マンション原状回復（25m&sup2;）
-            <span className="text-link-gray font-normal ml-1">/ 工期3日</span>
-          </p>
-          <div className="grid grid-cols-2 gap-2">
-            <div className="relative">
-              <div
-                className="aspect-[3/4] rounded-xl flex items-end justify-center text-white/60 font-bold text-lg pb-4"
-                style={{
-                  backgroundColor: "#78716c",
-                  backgroundImage:
-                    "linear-gradient(135deg, #78716c 0%, #a8a29e 50%, #78716c 100%)",
-                }}
-              >
-                Before
+        {/* PC: 2事例を横並び / モバイル: 縦並び */}
+        <div className="space-y-5 md:space-y-0 md:grid md:grid-cols-2 md:gap-8">
+          {/* 事例1 */}
+          <div>
+            <p className="text-sm md:text-base font-bold text-link-dark mb-2 text-center">
+              1K マンション原状回復（25m&sup2;）
+              <span className="text-link-gray font-normal ml-1">/ 工期3日</span>
+            </p>
+            <div className="grid grid-cols-2 gap-2 md:gap-3">
+              <div className="relative">
+                <div
+                  className="aspect-[3/4] md:aspect-[4/3] rounded-xl flex items-end justify-center text-white/60 font-bold text-lg pb-4"
+                  style={{
+                    backgroundColor: "#78716c",
+                    backgroundImage:
+                      "linear-gradient(135deg, #78716c 0%, #a8a29e 50%, #78716c 100%)",
+                  }}
+                >
+                  Before
+                </div>
+                <span className="absolute top-2 left-2 bg-black/70 text-white text-xs font-bold px-2.5 py-1 rounded-md">
+                  施工前
+                </span>
               </div>
-              <span className="absolute top-2 left-2 bg-black/70 text-white text-xs font-bold px-2.5 py-1 rounded-md">
-                施工前
-              </span>
+              <div className="relative">
+                <div
+                  className="aspect-[3/4] md:aspect-[4/3] rounded-xl flex items-end justify-center text-white/80 font-bold text-lg pb-4"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(135deg, #1d4ed8 0%, #3b82f6 50%, #60a5fa 100%)",
+                  }}
+                >
+                  After
+                </div>
+                <span className="absolute top-2 left-2 bg-link-orange text-white text-xs font-bold px-2.5 py-1 rounded-md">
+                  施工後
+                </span>
+              </div>
             </div>
-            <div className="relative">
-              <div
-                className="aspect-[3/4] rounded-xl flex items-end justify-center text-white/80 font-bold text-lg pb-4"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(135deg, #1d4ed8 0%, #3b82f6 50%, #60a5fa 100%)",
-                }}
-              >
-                After
+          </div>
+
+          {/* 事例2 */}
+          <div>
+            <p className="text-sm md:text-base font-bold text-link-dark mb-2 text-center">
+              2LDK 水回りリフォーム（55m&sup2;）
+              <span className="text-link-gray font-normal ml-1">/ 工期5日</span>
+            </p>
+            <div className="grid grid-cols-2 gap-2 md:gap-3">
+              <div className="relative">
+                <div
+                  className="aspect-[3/4] md:aspect-[4/3] rounded-xl flex items-end justify-center text-white/60 font-bold text-lg pb-4"
+                  style={{
+                    backgroundColor: "#78716c",
+                    backgroundImage:
+                      "linear-gradient(135deg, #57534e 0%, #a8a29e 50%, #78716c 100%)",
+                  }}
+                >
+                  Before
+                </div>
+                <span className="absolute top-2 left-2 bg-black/70 text-white text-xs font-bold px-2.5 py-1 rounded-md">
+                  施工前
+                </span>
               </div>
-              <span className="absolute top-2 left-2 bg-link-orange text-white text-xs font-bold px-2.5 py-1 rounded-md">
-                施工後
-              </span>
+              <div className="relative">
+                <div
+                  className="aspect-[3/4] md:aspect-[4/3] rounded-xl flex items-end justify-center text-white/80 font-bold text-lg pb-4"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(135deg, #0369a1 0%, #0ea5e9 50%, #38bdf8 100%)",
+                  }}
+                >
+                  After
+                </div>
+                <span className="absolute top-2 left-2 bg-link-orange text-white text-xs font-bold px-2.5 py-1 rounded-md">
+                  施工後
+                </span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* 事例2 */}
-        <div className="mb-4">
-          <p className="text-sm font-bold text-link-dark mb-2 text-center">
-            2LDK 水回りリフォーム（55m&sup2;）
-            <span className="text-link-gray font-normal ml-1">/ 工期5日</span>
-          </p>
-          <div className="grid grid-cols-2 gap-2">
-            <div className="relative">
-              <div
-                className="aspect-[3/4] rounded-xl flex items-end justify-center text-white/60 font-bold text-lg pb-4"
-                style={{
-                  backgroundColor: "#78716c",
-                  backgroundImage:
-                    "linear-gradient(135deg, #57534e 0%, #a8a29e 50%, #78716c 100%)",
-                }}
-              >
-                Before
-              </div>
-              <span className="absolute top-2 left-2 bg-black/70 text-white text-xs font-bold px-2.5 py-1 rounded-md">
-                施工前
-              </span>
-            </div>
-            <div className="relative">
-              <div
-                className="aspect-[3/4] rounded-xl flex items-end justify-center text-white/80 font-bold text-lg pb-4"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(135deg, #0369a1 0%, #0ea5e9 50%, #38bdf8 100%)",
-                }}
-              >
-                After
-              </div>
-              <span className="absolute top-2 left-2 bg-link-orange text-white text-xs font-bold px-2.5 py-1 rounded-md">
-                施工後
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div className="text-center space-y-2">
+        <div className="text-center space-y-2 mt-5 md:mt-8">
           <a
             href={`${HP_URL}/works`}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackCtaClick("works_more")}
-            className="inline-block text-link-navy font-bold text-sm underline underline-offset-4 hover:text-link-orange transition-colors"
+            className="inline-block text-link-navy font-bold text-sm md:text-base underline underline-offset-4 hover:text-link-orange transition-colors"
           >
             他の施工事例もチェック →
           </a>
@@ -374,7 +378,7 @@ function SlideWorks({ onCtaClick }: SlideProps) {
                 trackCtaClick("mid_cta_works");
                 onCtaClick?.();
               }}
-              className="text-link-orange font-bold text-sm underline underline-offset-4 cursor-pointer hover:text-accent-600 transition-colors"
+              className="text-link-orange font-bold text-sm md:text-base underline underline-offset-4 cursor-pointer hover:text-accent-600 transition-colors"
             >
               無料で見積りを相談する →
             </button>
@@ -390,58 +394,65 @@ function SlideWorks({ onCtaClick }: SlideProps) {
 // ============================================================
 function SlideProfile() {
   return (
-    <div className="w-full h-full bg-white flex items-center justify-center px-4">
-      <div className="w-full max-w-md mx-auto text-center">
-        <p className="text-link-navy font-bold text-sm tracking-wider mb-1">
+    <div className="w-full h-full bg-white flex items-center justify-center px-4 md:px-8">
+      <div className="w-full max-w-md md:max-w-3xl lg:max-w-4xl mx-auto text-center">
+        <p className="text-link-navy font-bold text-sm md:text-base tracking-wider mb-1">
           MESSAGE
         </p>
-        <h2 className="text-2xl font-bold text-link-dark mb-4">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-link-dark mb-4 md:mb-8">
           なぜLinKを作ったのか
         </h2>
 
-        {/* プレースホルダー写真 */}
-        <div className="w-24 h-24 rounded-full bg-gradient-to-br from-link-navy to-link-dark mx-auto mb-3 flex items-center justify-center">
-          <span className="text-white text-3xl font-bold">Y</span>
-        </div>
+        {/* PC: 横並び2カラム / モバイル: 縦並び */}
+        <div className="md:flex md:gap-10 md:items-start md:text-left">
+          {/* 左: 写真 + 名前 */}
+          <div className="flex-shrink-0 md:w-48">
+            <div className="w-24 h-24 md:w-36 md:h-36 rounded-full bg-gradient-to-br from-link-navy to-link-dark mx-auto mb-3 flex items-center justify-center">
+              <span className="text-white text-3xl md:text-5xl font-bold">Y</span>
+            </div>
+            <h3 className="text-lg md:text-xl font-bold text-link-dark mb-0.5">吉野 博</h3>
+            <p className="text-link-gray text-sm mb-3 md:mb-0">
+              株式会社LinK 代表取締役
+            </p>
+          </div>
 
-        <h3 className="text-lg font-bold text-link-dark mb-0.5">吉野 博</h3>
-        <p className="text-link-gray text-sm mb-3">
-          株式会社LinK 代表取締役
-        </p>
+          {/* 右: メッセージ */}
+          <div className="flex-1">
+            <div className="bg-slate-50 rounded-xl p-5 md:p-8 text-left space-y-3 md:space-y-4">
+              <p className="text-sm md:text-base text-link-dark leading-relaxed">
+                建設業界で<strong className="text-link-navy">11年</strong>。
+                下請け時代に何度も見た光景があります。
+              </p>
+              <p className="text-sm md:text-base text-link-dark leading-relaxed">
+                「結局いくらかかったの？」とオーナーに詰められる管理会社の担当者。
+                「来週には終わると言ったよね？」と入居者から電話を受ける担当者。
+              </p>
+              <p className="text-sm md:text-base text-link-dark leading-relaxed">
+                原因はいつも同じ。情報が現場で止まっていること。
+                その&ldquo;不透明さ&rdquo;をゼロにする会社を作ろう。
+                <strong className="text-link-navy">60社</strong>の専門家と直接つながる仕組みを整えよう。
+                その想いひとつで、LinKを立ち上げました。
+              </p>
+              <p className="text-sm md:text-base text-link-dark leading-relaxed font-bold border-t border-slate-200 pt-3">
+                目指しているのは、管理会社様が
+                <span className="text-link-orange">「原状回復を忘れられる状態」</span>。
+                <br />
+                建物に関わるすべての仕事を、まっとうにする。
+              </p>
+            </div>
 
-        <div className="bg-slate-50 rounded-xl p-5 text-left space-y-3">
-          <p className="text-sm text-link-dark leading-relaxed">
-            建設業界で<strong className="text-link-navy">11年</strong>。
-            下請け時代に何度も見た光景があります。
-          </p>
-          <p className="text-sm text-link-dark leading-relaxed">
-            「結局いくらかかったの？」とオーナーに詰められる管理会社の担当者。
-            「来週には終わると言ったよね？」と入居者から電話を受ける担当者。
-          </p>
-          <p className="text-sm text-link-dark leading-relaxed">
-            原因はいつも同じ。情報が現場で止まっていること。
-            その&ldquo;不透明さ&rdquo;をゼロにする会社を作ろう。
-            <strong className="text-link-navy">60社</strong>の専門家と直接つながる仕組みを整えよう。
-            その想いひとつで、LinKを立ち上げました。
-          </p>
-          <p className="text-sm text-link-dark leading-relaxed font-bold border-t border-slate-200 pt-3">
-            目指しているのは、管理会社様が
-            <span className="text-link-orange">「原状回復を忘れられる状態」</span>。
-            <br />
-            建物に関わるすべての仕事を、まっとうにする。
-          </p>
-        </div>
-
-        <div className="flex justify-center gap-3 mt-4 flex-wrap">
-          <span className="bg-link-navy/5 text-link-navy text-xs px-3 py-1.5 rounded-full font-medium">
-            業界歴11年
-          </span>
-          <span className="bg-link-navy/5 text-link-navy text-xs px-3 py-1.5 rounded-full font-medium">
-            60社+ネットワーク
-          </span>
-          <span className="bg-link-navy/5 text-link-navy text-xs px-3 py-1.5 rounded-full font-medium">
-            関東一都三県
-          </span>
+            <div className="flex justify-center md:justify-start gap-3 mt-4 flex-wrap">
+              <span className="bg-link-navy/5 text-link-navy text-xs md:text-sm px-3 md:px-4 py-1.5 rounded-full font-medium">
+                業界歴11年
+              </span>
+              <span className="bg-link-navy/5 text-link-navy text-xs md:text-sm px-3 md:px-4 py-1.5 rounded-full font-medium">
+                60社+ネットワーク
+              </span>
+              <span className="bg-link-navy/5 text-link-navy text-xs md:text-sm px-3 md:px-4 py-1.5 rounded-full font-medium">
+                関東一都三県
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -489,24 +500,25 @@ function SlideFlow({ onCtaClick }: SlideProps) {
   ];
 
   return (
-    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-md mx-auto text-center">
-        <p className="text-link-navy font-bold text-sm tracking-wider mb-1">
+    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-4 md:px-8">
+      <div className="w-full max-w-md md:max-w-3xl lg:max-w-4xl mx-auto text-center">
+        <p className="text-link-navy font-bold text-sm md:text-base tracking-wider mb-1">
           FLOW
         </p>
-        <h2 className="text-2xl font-bold text-link-dark mb-1">
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-link-dark mb-1">
           お問い合わせから最短3日で見積り提出
         </h2>
-        <p className="text-link-orange font-bold text-sm mb-5">
+        <p className="text-link-orange font-bold text-sm md:text-base mb-5 md:mb-8">
           ステップ3まで完全無料。費用が発生するのは工事決定後です。
         </p>
 
-        <div className="space-y-3">
+        {/* モバイル: 縦リスト / PC: 横5カラム */}
+        <div className="space-y-3 md:space-y-0 md:grid md:grid-cols-5 md:gap-4">
           {steps.map((step) => (
-            <div key={step.num} className="flex items-center gap-4 text-left">
+            <div key={step.num} className="flex items-center gap-4 text-left md:flex-col md:items-center md:text-center md:gap-3">
               {/* ステップ番号 */}
               <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 ${
+                className={`w-10 h-10 md:w-14 md:h-14 rounded-full flex items-center justify-center font-bold text-sm md:text-lg flex-shrink-0 ${
                   step.free
                     ? "bg-link-orange text-white"
                     : "bg-link-navy text-white"
@@ -516,12 +528,12 @@ function SlideFlow({ onCtaClick }: SlideProps) {
               </div>
 
               {/* コンテンツ */}
-              <div className="flex-1 bg-white rounded-lg p-3 shadow-sm border border-slate-100">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-link-dark text-sm">
+              <div className="flex-1 bg-white rounded-lg p-3 md:p-4 shadow-sm border border-slate-100 md:w-full">
+                <div className="flex items-center justify-between md:flex-col md:gap-1">
+                  <h3 className="font-bold text-link-dark text-sm md:text-base">
                     {step.title}
                   </h3>
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 md:flex-col">
                     {step.time && (
                       <span className="text-link-gray text-xs">
                         {step.time}
@@ -534,7 +546,7 @@ function SlideFlow({ onCtaClick }: SlideProps) {
                     )}
                   </div>
                 </div>
-                <p className="text-link-gray text-xs mt-0.5">{step.desc}</p>
+                <p className="text-link-gray text-xs md:text-sm mt-0.5 md:mt-2">{step.desc}</p>
               </div>
             </div>
           ))}
@@ -546,7 +558,7 @@ function SlideFlow({ onCtaClick }: SlideProps) {
             trackCtaClick("mid_cta_flow");
             onCtaClick?.();
           }}
-          className="mt-5 text-link-orange font-bold text-sm underline underline-offset-4 cursor-pointer hover:text-accent-600 transition-colors"
+          className="mt-5 md:mt-8 text-link-orange font-bold text-sm md:text-base underline underline-offset-4 cursor-pointer hover:text-accent-600 transition-colors"
         >
           まずはSTEP 1の無料相談から →
         </button>
@@ -562,29 +574,29 @@ function SlideCta() {
   return (
     <div
       id="contact"
-      className="w-full h-full bg-gradient-to-br from-link-navy via-[#1e3a5f] to-link-dark flex items-center justify-center px-4"
+      className="w-full h-full bg-gradient-to-br from-link-navy via-[#1e3a5f] to-link-dark flex items-center justify-center px-4 md:px-8"
     >
-      <div className="w-full max-w-md mx-auto text-center">
-        <p className="text-link-gold font-bold text-sm tracking-wider mb-3">
+      <div className="w-full max-w-md md:max-w-2xl lg:max-w-3xl mx-auto text-center">
+        <p className="text-link-gold font-bold text-sm md:text-base tracking-wider mb-3">
           CONTACT
         </p>
-        <h2 className="text-white text-2xl sm:text-3xl font-bold mb-3">
+        <h2 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-5">
           原状回復の発注先、
           <br />
           そろそろ変えませんか？
         </h2>
-        <p className="text-white/70 text-sm mb-8">
+        <p className="text-white/70 text-sm md:text-lg mb-8 md:mb-10">
           お見積りは最短3日。もちろん完全無料です。
           <br />
           今の業者との比較検討だけでもお気軽にどうぞ。
         </p>
 
         {/* CTAボタン */}
-        <div className="space-y-4">
+        <div className="space-y-4 md:flex md:justify-center md:gap-4 md:space-y-0">
           <a
             href={`${HP_URL}/contact/construction`}
             onClick={() => trackCtaClick("final_cta_form")}
-            className="cta-pulse block bg-link-orange hover:bg-accent-600 text-white font-bold text-lg py-4 px-8 rounded-full transition-colors"
+            className="cta-pulse block md:inline-block bg-link-orange hover:bg-accent-600 text-white font-bold text-lg md:text-xl py-4 px-8 md:px-12 rounded-full transition-colors"
           >
             無料で見積りを依頼する
           </a>
@@ -592,7 +604,7 @@ function SlideCta() {
           <a
             href={PHONE_HREF}
             onClick={() => trackTelClick()}
-            className="block bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-bold py-3 px-8 rounded-full border border-white/30 transition-colors"
+            className="block md:inline-block bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white font-bold py-3 md:py-4 px-8 md:px-10 rounded-full border border-white/30 transition-colors"
           >
             電話で相談: {PHONE}
             <span className="block text-xs font-normal text-white/60 mt-0.5">
@@ -602,7 +614,7 @@ function SlideCta() {
         </div>
 
         {/* ゼロリスクバッジ */}
-        <div className="flex flex-wrap justify-center gap-3 mt-8">
+        <div className="flex flex-wrap justify-center gap-3 md:gap-4 mt-8 md:mt-10">
           {[
             "相談無料",
             "現場調査無料",
@@ -612,7 +624,7 @@ function SlideCta() {
           ].map((badge) => (
             <span
               key={badge}
-              className="bg-link-gold/20 text-link-gold text-xs font-bold px-3 py-1.5 rounded-full border border-link-gold/30"
+              className="bg-link-gold/20 text-link-gold text-xs md:text-sm font-bold px-3 md:px-4 py-1.5 md:py-2 rounded-full border border-link-gold/30"
             >
               ✓ {badge}
             </span>
@@ -620,12 +632,12 @@ function SlideCta() {
         </div>
 
         {/* 安心メッセージ */}
-        <p className="text-white/60 text-xs mt-4">
+        <p className="text-white/60 text-xs md:text-sm mt-4">
           ※ しつこい営業は一切しません
         </p>
 
         {/* 希少性 */}
-        <p className="text-white/70 text-xs mt-2">
+        <p className="text-white/70 text-xs md:text-sm mt-2">
           ※ 関東一都三県限定 / 月間の受付枠に上限があるため、お早めにご相談ください
         </p>
 
@@ -633,7 +645,7 @@ function SlideCta() {
         <div className="mt-6 pt-4 border-t border-white/10">
           <a
             href={HP_URL}
-            className="text-white/50 hover:text-white/80 text-xs underline underline-offset-4 transition-colors"
+            className="text-white/50 hover:text-white/80 text-xs md:text-sm underline underline-offset-4 transition-colors"
           >
             株式会社LinK 公式サイト →
           </a>
