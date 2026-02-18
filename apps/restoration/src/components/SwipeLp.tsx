@@ -698,9 +698,8 @@ export default function SwipeLp() {
     return (
       <Swiper
         direction="horizontal"
-        modules={[Pagination, Mousewheel, Keyboard]}
+        modules={[Pagination, Keyboard]}
         pagination={{ clickable: true }}
-        mousewheel={true}
         keyboard={true}
         speed={600}
         onSwiper={(swiper) => {
