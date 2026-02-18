@@ -94,10 +94,9 @@ function SlideHero({ onCtaClick }: SlideProps) {
           ))}
         </div>
 
-        {/* スクロールヒント */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-hint flex flex-col items-center gap-1">
-          <span className="text-white/60 text-xs md:text-sm md:hidden">スワイプして詳しく</span>
-          <span className="text-white/60 text-sm hidden md:block">スクロールして詳しく</span>
+        {/* スクロールヒント（モバイルのみ） */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-hint flex flex-col items-center gap-1 md:hidden">
+          <span className="text-white/60 text-xs">スワイプして詳しく</span>
           <svg
             className="w-6 h-6 text-white/70"
             fill="none"
@@ -140,7 +139,7 @@ function SlidePains() {
   ];
 
   return (
-    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-4 md:px-8">
+    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-4 md:px-8 md:py-20 lg:py-28">
       <div className="w-full max-w-md md:max-w-3xl lg:max-w-4xl mx-auto text-center">
         <p className="text-link-orange font-bold text-sm md:text-base tracking-wider mb-1">
           PROBLEM
@@ -212,7 +211,7 @@ function SlideReasons({ onCtaClick }: SlideProps) {
   ];
 
   return (
-    <div className="w-full h-full bg-white flex items-center justify-center px-4 md:px-8">
+    <div className="w-full h-full bg-white flex items-center justify-center px-4 md:px-8 md:py-20 lg:py-28">
       <div className="w-full max-w-md md:max-w-3xl lg:max-w-4xl mx-auto text-center">
         <p className="text-link-navy font-bold text-sm md:text-base tracking-wider mb-1">
           WHY LinK
@@ -267,7 +266,7 @@ function SlideReasons({ onCtaClick }: SlideProps) {
 // ============================================================
 function SlideWorks({ onCtaClick }: SlideProps) {
   return (
-    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-4 md:px-8">
+    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-4 md:px-8 md:py-20 lg:py-28">
       <div className="w-full max-w-md md:max-w-3xl lg:max-w-4xl mx-auto">
         <div className="text-center mb-5 md:mb-8">
           <p className="text-link-navy font-bold text-sm md:text-base tracking-wider mb-1">
@@ -394,7 +393,7 @@ function SlideWorks({ onCtaClick }: SlideProps) {
 // ============================================================
 function SlideProfile() {
   return (
-    <div className="w-full h-full bg-white flex items-center justify-center px-4 md:px-8">
+    <div className="w-full h-full bg-white flex items-center justify-center px-4 md:px-8 md:py-20 lg:py-28">
       <div className="w-full max-w-md md:max-w-3xl lg:max-w-4xl mx-auto text-center">
         <p className="text-link-navy font-bold text-sm md:text-base tracking-wider mb-1">
           MESSAGE
@@ -500,7 +499,7 @@ function SlideFlow({ onCtaClick }: SlideProps) {
   ];
 
   return (
-    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-4 md:px-8">
+    <div className="w-full h-full bg-slate-50 flex items-center justify-center px-4 md:px-8 md:py-20 lg:py-28">
       <div className="w-full max-w-md md:max-w-3xl lg:max-w-4xl mx-auto text-center">
         <p className="text-link-navy font-bold text-sm md:text-base tracking-wider mb-1">
           FLOW
@@ -574,7 +573,7 @@ function SlideCta() {
   return (
     <div
       id="contact"
-      className="w-full h-full bg-gradient-to-br from-link-navy via-[#1e3a5f] to-link-dark flex items-center justify-center px-4 md:px-8"
+      className="w-full h-full bg-gradient-to-br from-link-navy via-[#1e3a5f] to-link-dark flex items-center justify-center px-4 md:px-8 md:py-20 lg:py-28"
     >
       <div className="w-full max-w-md md:max-w-2xl lg:max-w-3xl mx-auto text-center">
         <p className="text-link-gold font-bold text-sm md:text-base tracking-wider mb-3">
@@ -717,13 +716,13 @@ export default function SwipeLp() {
     );
   }
 
-  // PC: 通常スクロール
+  // PC: 通常スクロール（Heroのみフルビューポート、他はコンテンツベース）
   return (
     <div className="w-full">
       {slides.map((slide, i) => (
         <section
           key={i}
-          className="min-h-screen flex items-center justify-center"
+          className={i === 0 ? "h-screen" : ""}
         >
           {slide}
         </section>
