@@ -574,7 +574,96 @@ function SlideFlow({ onCtaClick }: SlideProps) {
 }
 
 // ============================================================
-// Slide 7: 最終CTA（インラインフォーム）
+// Slide 7: 実績・社会的証明
+// ============================================================
+function SlideTrust({ onCtaClick }: SlideProps) {
+  const stats = [
+    { num: "60社+", label: "専門協力会社", sub: "クロス・設備・電気・清掃 etc." },
+    { num: "11年", label: "代表の業界経験", sub: "施工管理〜経営まで一貫" },
+    { num: "1億円", label: "年間売上（3期目）", sub: "設立3年目で突破" },
+    { num: "75%↑", label: "前年比成長率", sub: "紹介とリピートだけで" },
+  ];
+
+  return (
+    <div className="w-full h-full bg-white flex items-center justify-center px-4 md:px-8 md:py-20 lg:py-28">
+      <div className="w-full max-w-md md:max-w-3xl lg:max-w-4xl mx-auto text-center">
+        <p className="text-link-navy font-bold text-sm md:text-base tracking-wider mb-1">
+          TRACK RECORD
+        </p>
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-link-dark mb-2 md:mb-4">
+          数字で見る、LinKの信頼性
+        </h2>
+        <p className="text-link-gray text-sm md:text-base mb-6 md:mb-10">
+          広告費ほぼゼロ。ご紹介と口コミだけで成長しています。
+        </p>
+
+        {/* 数字グリッド */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-10">
+          {stats.map((s) => (
+            <div
+              key={s.label}
+              className="bg-slate-50 rounded-xl p-4 md:p-6 border border-slate-100"
+            >
+              <p className="text-link-orange text-3xl md:text-4xl lg:text-5xl font-black leading-none mb-1 md:mb-2">
+                {s.num}
+              </p>
+              <p className="text-link-dark font-bold text-sm md:text-base">
+                {s.label}
+              </p>
+              <p className="text-link-gray text-xs md:text-sm mt-0.5">
+                {s.sub}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* 信頼ポイント */}
+        <div className="bg-link-navy/5 rounded-xl p-5 md:p-8 mb-5 md:mb-8">
+          <h3 className="text-link-dark font-bold text-base md:text-lg mb-3 md:mb-4">
+            なぜ紹介だけで成長できるのか？
+          </h3>
+          <div className="space-y-3 md:space-y-0 md:grid md:grid-cols-3 md:gap-6 text-left">
+            <div className="flex gap-3 items-start md:flex-col md:items-center md:text-center">
+              <span className="text-xl md:text-2xl flex-shrink-0">🔍</span>
+              <div>
+                <p className="text-link-dark font-bold text-sm md:text-base">見積りに嘘がない</p>
+                <p className="text-link-gray text-xs md:text-sm">内訳を全て開示。後から追加費用が出ない</p>
+              </div>
+            </div>
+            <div className="flex gap-3 items-start md:flex-col md:items-center md:text-center">
+              <span className="text-xl md:text-2xl flex-shrink-0">📸</span>
+              <div>
+                <p className="text-link-dark font-bold text-sm md:text-base">報告が止まらない</p>
+                <p className="text-link-gray text-xs md:text-sm">工程ごとに写真報告。確認の電話が不要に</p>
+              </div>
+            </div>
+            <div className="flex gap-3 items-start md:flex-col md:items-center md:text-center">
+              <span className="text-xl md:text-2xl flex-shrink-0">🤝</span>
+              <div>
+                <p className="text-link-dark font-bold text-sm md:text-base">担当者の手間がゼロ</p>
+                <p className="text-link-gray text-xs md:text-sm">「丸投げ」で完結。だから次もLinKに頼む</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA */}
+        <button
+          onClick={() => {
+            trackCtaClick("mid_cta_trust");
+            onCtaClick?.();
+          }}
+          className="cta-pulse bg-link-orange hover:bg-accent-600 text-white font-bold text-base md:text-lg py-3 px-8 md:py-4 md:px-12 rounded-full transition-colors"
+        >
+          この実績を体験する → 無料相談
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ============================================================
+// Slide 8: 最終CTA（インラインフォーム）
 // ============================================================
 function SlideCta() {
   const [status, setStatus] = useState<
@@ -917,7 +1006,7 @@ export default function SwipeLp() {
   const trackedSections = useRef(new Set<string>());
   useEffect(() => {
     if (isMobile) return;
-    const sectionNames = ["hero", "pains", "reasons", "works", "profile", "flow", "contact"];
+    const sectionNames = ["hero", "pains", "reasons", "works", "profile", "flow", "trust", "contact"];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -962,7 +1051,7 @@ export default function SwipeLp() {
   // CTA押下時の遷移
   const handleCtaClick = useCallback(() => {
     if (isMobile && variant === "swipe" && swiperRef.current) {
-      swiperRef.current.slideTo(6);
+      swiperRef.current.slideTo(7);
     } else {
       document
         .getElementById("contact")
@@ -977,6 +1066,7 @@ export default function SwipeLp() {
     <SlideWorks key="works" onCtaClick={handleCtaClick} />,
     <SlideProfile key="profile" />,
     <SlideFlow key="flow" onCtaClick={handleCtaClick} />,
+    <SlideTrust key="trust" onCtaClick={handleCtaClick} />,
     <SlideCta key="cta" />,
   ];
 
@@ -1026,7 +1116,7 @@ export default function SwipeLp() {
   }
 
   // PC: 通常スクロール（Heroのみフルビューポート、他はコンテンツベース）
-  const sectionNames = ["hero", "pains", "reasons", "works", "profile", "flow", "contact"];
+  const sectionNames = ["hero", "pains", "reasons", "works", "profile", "flow", "trust", "contact"];
   return (
     <div className="w-full">
       {slides.map((slide, i) => (
