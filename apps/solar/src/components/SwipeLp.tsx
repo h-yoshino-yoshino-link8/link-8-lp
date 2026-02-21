@@ -20,7 +20,7 @@ const FORMSPARK_ID = "qvZdUnofr";
 // ============================================================
 function SlideHero() {
   return (
-    <div className="relative w-full h-full bg-gradient-to-b from-red-700 via-red-800 to-red-950 flex items-center justify-center overflow-hidden">
+    <div className="relative w-full min-h-screen bg-gradient-to-b from-red-700 via-red-800 to-red-950 flex items-center justify-center overflow-hidden">
       {/* 斜めストライプ警告パターン */}
       <div className="absolute inset-0 opacity-[0.06]">
         <div
@@ -33,7 +33,7 @@ function SlideHero() {
       </div>
 
       {/* 上部ターゲットラベル */}
-      <div className="absolute top-0 left-0 w-full bg-black/40 py-2.5 flex items-center justify-center gap-2">
+      <div className="absolute top-0 left-0 w-full bg-black/40 py-2.5 flex items-center justify-center gap-2 z-20">
         <span className="w-2.5 h-2.5 bg-yellow-400 rounded-full animate-pulse" />
         <span className="text-yellow-400 text-xs font-black tracking-wider">
           スレート屋根の工場オーナー様へ
@@ -41,7 +41,7 @@ function SlideHero() {
         <span className="w-2.5 h-2.5 bg-yellow-400 rounded-full animate-pulse" />
       </div>
 
-      <div className="relative z-10 text-center px-6 max-w-lg mx-auto">
+      <div className="relative z-10 text-center px-6 max-w-lg mx-auto pt-14">
         {/* メインコピー */}
         <h1 className="text-white text-3xl sm:text-4xl font-black leading-[1.3] mb-4 drop-shadow-lg">
           その屋根、
@@ -116,7 +116,7 @@ function SlideHero() {
 // ============================================================
 function SlideSolution() {
   return (
-    <div className="relative w-full h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center overflow-hidden px-4">
+    <div className="relative w-full min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center overflow-hidden px-4">
       {/* 背景のグロー */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-emerald-500/10 rounded-full blur-[100px]" />
 
@@ -185,7 +185,7 @@ function SlideSolution() {
 // ============================================================
 function SlideStrength() {
   return (
-    <div className="w-full h-full bg-white flex items-center justify-center px-4">
+    <div className="w-full min-h-screen bg-white flex items-center justify-center px-4">
       <div className="w-full max-w-md mx-auto">
         {/* ヘッダー */}
         <div className="text-center mb-6">
@@ -267,7 +267,7 @@ function SlideStrength() {
 // ============================================================
 function SlideCost() {
   return (
-    <div className="relative w-full h-full bg-gradient-to-br from-blue-950 via-slate-900 to-blue-950 flex items-center justify-center overflow-hidden px-4">
+    <div className="relative w-full min-h-screen bg-gradient-to-br from-blue-950 via-slate-900 to-blue-950 flex items-center justify-center overflow-hidden px-4">
       {/* 背景グロー */}
       <div className="absolute top-20 right-10 w-60 h-60 bg-amber-500/5 rounded-full blur-[80px]" />
 
@@ -378,7 +378,7 @@ function SlideFlow() {
   ];
 
   return (
-    <div className="w-full h-full bg-gradient-to-b from-slate-50 to-white flex items-center justify-center px-4">
+    <div className="w-full min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center px-4">
       <div className="w-full max-w-md mx-auto">
         <div className="text-center mb-8">
           <p className="text-emerald-600 font-black text-xs tracking-[0.3em] mb-2">
@@ -487,7 +487,7 @@ function SlideCta() {
 
   if (formState === "sent") {
     return (
-      <div className="w-full h-full bg-gradient-to-br from-emerald-950 via-emerald-900 to-slate-950 flex items-center justify-center px-4">
+      <div className="w-full min-h-screen bg-gradient-to-br from-emerald-950 via-emerald-900 to-slate-950 flex items-center justify-center px-4">
         <div className="w-full max-w-md mx-auto text-center">
           <div className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg
@@ -527,7 +527,7 @@ function SlideCta() {
   return (
     <div
       id="contact"
-      className="w-full h-full bg-gradient-to-br from-emerald-950 via-emerald-900 to-slate-950 flex items-center justify-center px-4 overflow-y-auto"
+      className="w-full min-h-screen bg-gradient-to-br from-emerald-950 via-emerald-900 to-slate-950 flex items-center justify-center px-4 overflow-y-auto"
     >
       <div className="w-full max-w-md mx-auto text-center py-8">
         <p className="text-emerald-400 font-black text-xs tracking-[0.3em] mb-4">
