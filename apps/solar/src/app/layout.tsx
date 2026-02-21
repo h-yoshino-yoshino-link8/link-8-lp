@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
-import "@link8/ui/globals.css";
+import Script from "next/script";
+import "./globals.css";
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_ID;
 
 export const metadata: Metadata = {
-  title: "賃貸物件の太陽光パネル設置｜無料屋根診断｜株式会社LinK",
+  title: "スレート屋根でも太陽光｜超軽量3.7kgパネル｜株式会社LinK",
   description:
-    "賃貸物件オーナー・管理会社向け太陽光パネル設置。初期費用回収シミュレーション・ワンストップ対応・入居者満足度向上。まずは無料の屋根診断から。",
+    "スレート屋根で太陽光を断られた工場オーナー様へ。1枚3.7kgの超軽量パネル「ペラペラ太陽光」なら設置可能。建設業許可を持つLinKが屋根補強から設置まで一括対応。電気代最大50%削減。無料Zoom相談受付中。",
   openGraph: {
-    title: "賃貸物件の太陽光パネル設置｜無料屋根診断｜株式会社LinK",
+    title: "スレート屋根でも太陽光｜超軽量3.7kgパネル｜株式会社LinK",
     description:
-      "太陽光パネル設置で屋根を収益化。診断から設置、アフターサポートまでワンストップ。",
+      "断られた屋根に、載る。従来の1/5の重さ、1枚3.7kgの超軽量太陽光パネル。建設業許可を持つLinKが屋根補強+太陽光を一括対応。",
     type: "website",
     locale: "ja_JP",
   },
@@ -21,6 +25,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
+      <head>
+        {GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
+            </Script>
+          </>
+        )}
+        {CLARITY_ID && (
+          <Script id="clarity-init" strategy="afterInteractive">
+            {`(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","${CLARITY_ID}");`}
+          </Script>
+        )}
+      </head>
       <body className="antialiased">{children}</body>
     </html>
   );
